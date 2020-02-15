@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HierarchicalContentNavigatorModule", "HierarchicalContentNavigatorModule\HierarchicalContentNavigatorModule.csproj", "{588EED0F-F600-4C17-8B14-A636F5EBCD8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompositeContentNavigatorServiceModule", "CompositeContentNavigatorServiceModule\CompositeContentNavigatorServiceModule.csproj", "{9A842FC4-1613-4A64-8165-AB7744EDAF3C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{588EED0F-F600-4C17-8B14-A636F5EBCD8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{588EED0F-F600-4C17-8B14-A636F5EBCD8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{588EED0F-F600-4C17-8B14-A636F5EBCD8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{588EED0F-F600-4C17-8B14-A636F5EBCD8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A842FC4-1613-4A64-8165-AB7744EDAF3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A842FC4-1613-4A64-8165-AB7744EDAF3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A842FC4-1613-4A64-8165-AB7744EDAF3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A842FC4-1613-4A64-8165-AB7744EDAF3C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E32F7975-9887-4A6C-B7ED-AA746D803F2F}
+	EndGlobalSection
+EndGlobal
