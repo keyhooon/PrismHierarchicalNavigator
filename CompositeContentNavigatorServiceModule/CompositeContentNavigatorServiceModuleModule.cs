@@ -1,4 +1,5 @@
-﻿using CompositeContentNavigatorServiceModule.Views;
+﻿using CompositeContentNavigatorServiceModule.Services;
+using CompositeContentNavigatorServiceModule.Views;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
@@ -14,7 +15,9 @@ namespace CompositeContentNavigatorServiceModule
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry
+                .RegisterSingleton<CompositeMapNavigatorService>()
+                ;
         }
     }
 }
