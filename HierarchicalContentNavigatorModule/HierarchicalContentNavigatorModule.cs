@@ -11,20 +11,11 @@ using System.Windows.Shapes;
 
 namespace HierarchicalContentNavigatorModule
 {
-    public class HierarchicalContentNavigatorModuleModule : IModule
+    public class HierarchicalContentNavigatorModule : IModule
     {
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            var myResourceDictionary = new ResourceDictionary
-            {
-                Source = new Uri("/Modules.ContentNavigator;Component/Assets/IconVectorResource.xaml",
-                     UriKind.Relative)
-            };
-            var compositeMapNavigatorService = containerProvider.Resolve<CompositeMapNavigatorService>();
-            compositeMapNavigatorService.RegisterItem("Health",
-                                                      MapItemBuilder.CreateDefaultBuilder("My Health")
-                                                                    .WithImage((Path)myResourceDictionary["Health"])
-                                                     );
+
             containerProvider.Resolve<IRegionManager>().RegisterViewWithRegion("ContentMap", typeof(ContentNavigatorView));
         }
 

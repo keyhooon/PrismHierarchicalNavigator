@@ -3,11 +3,14 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWPF>true</UseWPF>
     <AssemblyName>HierarchicalContentNavigatorModule</AssemblyName>
+    <Version>1.0.1</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Prism.Wpf" Version="7.2.0.1367" />
+    <PackageReference Include="CompositeContentNavigatorServiceModule" Version="1.0.1" />
+    <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CompositeContentNavigatorServiceModule\CompositeContentNavigatorServiceModule.csproj" />
+    <Folder Include="Config\" />
   </ItemGroup>
 </Project>
