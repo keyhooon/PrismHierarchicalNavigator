@@ -1,10 +1,10 @@
-﻿using CompositeContentNavigatorServiceModule.Services;
-using CompositeContentNavigatorServiceModule.Services.MapItems.Data;
+﻿using CompositeContentNavigator.Services;
+using CompositeContentNavigator.Services.MapItems.Data;
 using Prism.Commands;
 using Prism.Mvvm;
 using System.Collections.ObjectModel;
 
-namespace CompositeContentNavigatorServiceModule.ViewModels
+namespace CompositeContentNavigator.ViewModels
 {
     public class ContentNavigatorViewModel : BindableBase
     {

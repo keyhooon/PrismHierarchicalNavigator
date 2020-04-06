@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompositeContentNavigatorServiceModule", "CompositeContentNavigatorServiceModule\CompositeContentNavigatorServiceModule.csproj", "{9A842FC4-1613-4A64-8165-AB7744EDAF3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompositeContentNavigator", "CompositeContentNavigatorServiceModule\CompositeContentNavigator.csproj", "{9A842FC4-1613-4A64-8165-AB7744EDAF3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{9C69BADF-16F4-4B6F-B155-BBEBF4A5D202}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{9A842FC4-1613-4A64-8165-AB7744EDAF3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A842FC4-1613-4A64-8165-AB7744EDAF3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A842FC4-1613-4A64-8165-AB7744EDAF3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C69BADF-16F4-4B6F-B155-BBEBF4A5D202}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C69BADF-16F4-4B6F-B155-BBEBF4A5D202}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C69BADF-16F4-4B6F-B155-BBEBF4A5D202}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C69BADF-16F4-4B6F-B155-BBEBF4A5D202}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

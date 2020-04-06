@@ -1,9 +1,10 @@
 ﻿
 
+using CompositeContentNavigator.Services.MapItems;
 using System;
 using System.Windows.Shapes;
 
-namespace CompositeContentNavigatorServiceModule.Services.MapItems.Data
+namespace CompositeContentNavigator.Services.MapItems.Data
 {
     public class HasImageSvgPathMapItem : MapItemDecorator
     {

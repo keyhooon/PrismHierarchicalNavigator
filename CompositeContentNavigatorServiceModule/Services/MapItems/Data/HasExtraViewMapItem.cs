@@ -1,7 +1,8 @@
-﻿using System;
+﻿using CompositeContentNavigator.Services.MapItems;
+using System;
 using System.Collections.Generic;
 
-namespace CompositeContentNavigatorServiceModule.Services.MapItems.Data
+namespace CompositeContentNavigator.Services.MapItems.Data
 {
     class HasExtraViewMapItem : MapItemDecorator
     {

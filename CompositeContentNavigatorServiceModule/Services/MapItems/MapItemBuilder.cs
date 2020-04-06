@@ -1,9 +1,8 @@
-﻿
-using CompositeContentNavigatorServiceModule.Services.MapItems.Data;
+﻿using CompositeContentNavigator.Services.MapItems.Data;
 using System;
 using System.Collections.Generic;
 
-namespace CompositeContentNavigatorServiceModule.Services.MapItems
+namespace CompositeContentNavigator.Services.MapItems
 {
     public class MapItemBuilder
     {

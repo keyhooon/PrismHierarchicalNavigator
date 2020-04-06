@@ -1,4 +1,4 @@
-﻿namespace CompositeContentNavigatorServiceModule.Services.MapItems.Data
+﻿namespace CompositeContentNavigator.Services.MapItems.Data
 {
     public class MapItemDecorator : MapItem
     {

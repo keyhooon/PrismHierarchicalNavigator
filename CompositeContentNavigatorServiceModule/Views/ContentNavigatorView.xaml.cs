@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace CompositeContentNavigatorServiceModule.Views
+namespace CompositeContentNavigator.Views
 {
     /// <summary>
     /// Interaction logic for ViewA.xaml

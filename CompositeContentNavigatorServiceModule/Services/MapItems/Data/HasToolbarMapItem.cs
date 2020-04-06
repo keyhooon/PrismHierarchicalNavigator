@@ -1,8 +1,9 @@
-﻿using System;
+﻿using CompositeContentNavigator.Services.MapItems;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace CompositeContentNavigatorServiceModule.Services.MapItems.Data
+namespace CompositeContentNavigator.Services.MapItems.Data
 {
     public class HasToolbarMapItem : MapItemDecorator
     {

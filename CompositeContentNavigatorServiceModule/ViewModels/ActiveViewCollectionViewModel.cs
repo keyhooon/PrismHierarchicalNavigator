@@ -1,12 +1,11 @@
 ﻿using System.Collections.Specialized;
 using System.Linq;
-using CompositeContentNavigatorServiceModule.Config;
 using Microsoft.Extensions.Configuration;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 
-namespace CompositeContentNavigatorServiceModule.ViewModels
+namespace CompositeContentNavigator.ViewModels
 {
     public class ActiveViewCollectionViewModel : BindableBase
     {
@@ -20,6 +19,8 @@ namespace CompositeContentNavigatorServiceModule.ViewModels
                 _config = new ModuleConfig();
 
             ContentRegion = regionManager.Regions.FirstOrDefault(region => region.Name == _config.ContentRegionName);
+            if (ContentRegion != null)
+                ContentRegion.ActiveViews.CollectionChanged += ActiveViews_CollectionChanged;
             regionManager.Regions.CollectionChanged += (sender, args) =>
             {
                 switch (args.Action)
@@ -27,22 +28,40 @@ namespace CompositeContentNavigatorServiceModule.ViewModels
                     case NotifyCollectionChangedAction.Add:
                         foreach (IRegion argsNewItem in args.NewItems)
                             if (argsNewItem.Name == _config.ContentRegionName)
+                            {
                                 ContentRegion = argsNewItem;
+                                ContentRegion.ActiveViews.CollectionChanged += ActiveViews_CollectionChanged;
+                            }
                         break;
                     case NotifyCollectionChangedAction.Remove:
                         foreach (IRegion argsNewItem in args.OldItems)
                             if (argsNewItem.Name == _config.ContentRegionName)
+                            {
+                                ContentRegion.ActiveViews.CollectionChanged -= ActiveViews_CollectionChanged;
                                 ContentRegion = null;
+                            }
                         break;
                 }
             };
         }
 
+        private void ActiveViews_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+ //           ActiveView = ContentRegion.ActiveViews.FirstOrDefault();
+        }
+
+        private object _activeView;
+        public object ActiveView
+        {
+            get { return _activeView; }
+            set { SetProperty(ref _activeView, value); }
+        }
+
+
+
         /// <summary>
         /// The <see cref="ContentRegion" /> property's name.
         /// </summary>
-
-
         private IRegion _contentRegion = null;
 
         /// <summary>
@@ -71,8 +90,9 @@ namespace CompositeContentNavigatorServiceModule.ViewModels
         public DelegateCommand<object> DeleteCommand =>
                     _deleteCommand ??= new DelegateCommand<object>(o =>
                     {
+//                        ContentRegion.NavigationService.Journal.
                         ContentRegion.Remove(o);
-                        ContentRegion.NavigationService.Journal.GoBack();
+
                     }, o => ContentRegion != null).ObservesProperty(() => ContentRegion);
     }
 }

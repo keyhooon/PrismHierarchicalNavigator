@@ -3,23 +3,22 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using CompositeContentNavigatorServiceModule.Config;
-using CompositeContentNavigatorServiceModule.Services.MapItems;
-using CompositeContentNavigatorServiceModule.Services.MapItems.Data;
+using CompositeContentNavigator.Services.MapItems;
+using CompositeContentNavigator.Services.MapItems.Data;
 using Microsoft.Extensions.Configuration;
 using Prism.Ioc;
 using Prism.Regions;
 
 
-namespace CompositeContentNavigatorServiceModule.Services
+namespace CompositeContentNavigator.Services
 {
     public class CompositeMapNavigatorService
     {
         public string ContentRegionName => _config.ContentRegionName;
-        public string ToolbarRegionName => _config.ToolbarRegionName;
+        public string ToolbarRegionName => _config.ContentMapRegionName;
 
         private readonly IRegionManager _regionManager;
-        private readonly IContainerRegistry _containerRegistery;
+        private readonly IContainerRegistry _container;
         private readonly ModuleConfig _config;
         private MapItem _selectedItem;
 
@@ -28,11 +27,11 @@ namespace CompositeContentNavigatorServiceModule.Services
         private readonly Dictionary<string, MapItem> _itemsViewDictionary;
         private readonly ObservableCollection<MapItem> _rootItemList;
 
-        public CompositeMapNavigatorService(IRegionManager regionManager, IContainerRegistry icontainerRegistery, IConfigurationRoot configurationRoot)
+        public CompositeMapNavigatorService(IRegionManager regionManager, IContainerExtension container, IConfigurationRoot configurationRoot)
         {
 
             _regionManager = regionManager;
-            _containerRegistery = icontainerRegistery;
+            _container = container;
             var section = configurationRoot.GetSection(ModuleConfig.SectionName);
             if (section.Exists())
                 _config = ConfigurationBinder.Get<ModuleConfig>(section);
@@ -100,8 +99,8 @@ namespace CompositeContentNavigatorServiceModule.Services
             if (toolbars != null && toolbars.Any())
                 foreach (var toolbar in toolbars)
                 {
-                    if (_containerRegistery.IsRegistered<object>(toolbar.FullName))
-                        _containerRegistery.RegisterSingleton(typeof(object), toolbar, toolbar.FullName);
+                    if (_container.IsRegistered<object>(toolbar.FullName))
+                        _container.RegisterSingleton(typeof(object), toolbar, toolbar.FullName);
                     _regionManager.Regions[ToolbarRegionName].RequestNavigate(toolbar.FullName);
                 }
 
@@ -110,8 +109,8 @@ namespace CompositeContentNavigatorServiceModule.Services
                 foreach (var extraViews in allExtraViews)
                     foreach (var extraView in extraViews.Value)
                     {
-                        if (!_containerRegistery.IsRegistered<object>(extraView.FullName))
-                            _containerRegistery.RegisterSingleton(typeof(object), extraView, extraView.FullName);
+                        if (!_container.IsRegistered<object>(extraView.FullName))
+                            _container.RegisterSingleton(typeof(object), extraView, extraView.FullName);
                         _regionManager.Regions[extraViews.Key].RequestNavigate(extraView.FullName);
                     }
 
@@ -170,8 +169,8 @@ namespace CompositeContentNavigatorServiceModule.Services
                 return;
             if (_regionManager.Regions[ContentRegionName].ActiveViews.FirstOrDefault()?.GetType() == viewType)
                 return;
-            if (!_containerRegistery.IsRegistered<object>(viewType.FullName))
-                _containerRegistery.RegisterSingleton(typeof(object), viewType, viewType.FullName);
+            if (!_container.IsRegistered<object>(viewType.FullName))
+                _container.RegisterSingleton(typeof(object), viewType, viewType.FullName);
             _regionManager.Regions[ContentRegionName].RequestNavigate(viewType.FullName, item.GetNavigationParameters());
         }
     }

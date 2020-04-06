@@ -1,7 +1,7 @@
 ﻿using MaterialDesignThemes.Wpf;
 using System.Windows;
 
-namespace CompositeContentNavigatorServiceModule
+namespace CompositeContentNavigator
 {
     public class ViewManager : DependencyObject
     {
@@ -19,7 +19,7 @@ namespace CompositeContentNavigatorServiceModule
         }
 
         public static readonly DependencyProperty HeaderChipIconProperty = DependencyProperty.RegisterAttached(
-            "HeaderChipIcon", typeof(ContentElement), typeof(ViewManager), new PropertyMetadata(new ContentElement()));
+            "HeaderChipIcon", typeof(ContentElement), typeof(ViewManager), new PropertyMetadata());
 
         public static void SetHeaderChipIcon(DependencyObject element, ContentElement value)
         {

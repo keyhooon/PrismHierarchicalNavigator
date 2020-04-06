@@ -1,7 +1,8 @@
-﻿using Prism.Regions;
+﻿using CompositeContentNavigator.Services.MapItems;
+using Prism.Regions;
 using System;
 
-namespace CompositeContentNavigatorServiceModule.Services.MapItems.Data
+namespace CompositeContentNavigator.Services.MapItems.Data
 {
     class HasNavigationParameterMapItem : MapItemDecorator
     {

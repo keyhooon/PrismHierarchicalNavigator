@@ -1,11 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace CompositeContentNavigatorServiceModule.Views
+namespace CompositeContentNavigator.Views
 {
     /// <summary>
     /// Interaction logic for ActiveViewCollectionView
     /// </summary>
-    public partial class ActiveViewCollectionView : UserControl
+    public partial class ActiveViewCollectionView : ListView
     {
         public ActiveViewCollectionView()
         {

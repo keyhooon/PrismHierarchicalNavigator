@@ -1,7 +1,8 @@
 ﻿
+using CompositeContentNavigator.Services.MapItems;
 using System.Collections.ObjectModel;
 
-namespace CompositeContentNavigatorServiceModule.Services.MapItems.Data
+namespace CompositeContentNavigator.Services.MapItems.Data
 {
     public class CompositeMapItem : MapItemDecorator
     {

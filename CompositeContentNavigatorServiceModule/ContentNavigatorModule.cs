@@ -1,14 +1,13 @@
-﻿using CompositeContentNavigatorServiceModule.Config;
-using CompositeContentNavigatorServiceModule.Services;
-using CompositeContentNavigatorServiceModule.Views;
+﻿using CompositeContentNavigator.Services;
+using CompositeContentNavigator.Views;
 using Microsoft.Extensions.Configuration;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 
-namespace CompositeContentNavigatorServiceModule
+namespace CompositeContentNavigator
 {
-    public class CompositeContentNavigatorServiceModule : IModule
+    public class ContentNavigatorModule : IModule
     {
         private ModuleConfig _config;
 
@@ -23,7 +22,8 @@ namespace CompositeContentNavigatorServiceModule
             var regionManager = containerProvider.Resolve<IRegionManager>();
 
             regionManager.RegisterViewWithRegion(_config.HeaderRegionName, typeof(ActiveViewCollectionView));
-            regionManager.RegisterViewWithRegion(_config.ToolbarRegionName, typeof(ContentNavigatorView));
+            regionManager.RegisterViewWithRegion(_config.ContentMapRegionName, typeof(ContentNavigatorView));
+            
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
