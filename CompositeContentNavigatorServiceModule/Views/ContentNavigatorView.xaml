@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="HierarchicalContentNavigatorModule.Views.ContentNavigatorView"
+    x:Class="CompositeContentNavigatorServiceModule.Views.ContentNavigatorView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:data="clr-namespace:CompositeContentNavigatorServiceModule.Services.MapItems.Data;assembly=CompositeContentNavigatorServiceModule"

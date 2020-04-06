@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Linq;
+using CompositeContentNavigatorServiceModule.Config;
 using CompositeContentNavigatorServiceModule.Services.MapItems;
 using CompositeContentNavigatorServiceModule.Services.MapItems.Data;
+using Microsoft.Extensions.Configuration;
 using Prism.Ioc;
 using Prism.Regions;
 
@@ -14,10 +15,12 @@ namespace CompositeContentNavigatorServiceModule.Services
 {
     public class CompositeMapNavigatorService
     {
-        public string ContentRegionName { get; }
-        public string ToolbarRegionName { get; }
+        public string ContentRegionName => _config.ContentRegionName;
+        public string ToolbarRegionName => _config.ToolbarRegionName;
+
         private readonly IRegionManager _regionManager;
         private readonly IContainerRegistry _containerRegistery;
+        private readonly ModuleConfig _config;
         private MapItem _selectedItem;
 
         private readonly Dictionary<string, MapItem> _itemsTagDictionary;
@@ -25,12 +28,18 @@ namespace CompositeContentNavigatorServiceModule.Services
         private readonly Dictionary<string, MapItem> _itemsViewDictionary;
         private readonly ObservableCollection<MapItem> _rootItemList;
 
-        public CompositeMapNavigatorService(IRegionManager regionManager, IContainerRegistry icontainerRegistery)
+        public CompositeMapNavigatorService(IRegionManager regionManager, IContainerRegistry icontainerRegistery, IConfigurationRoot configurationRoot)
         {
-            ContentRegionName = "Content";
-            ToolbarRegionName = "Toolbar";
+
             _regionManager = regionManager;
             _containerRegistery = icontainerRegistery;
+            var section = configurationRoot.GetSection(ModuleConfig.SectionName);
+            if (section.Exists())
+                _config = ConfigurationBinder.Get<ModuleConfig>(section);
+            else
+                _config = new ModuleConfig();
+
+ 
             _rootItemList = new ObservableCollection<MapItem>();
             RootItemList = new ReadOnlyObservableCollection<MapItem>(_rootItemList);
             _itemsViewDictionary = new Dictionary<string, MapItem>();
@@ -48,7 +57,8 @@ namespace CompositeContentNavigatorServiceModule.Services
                         if (region.Name == ContentRegionName)
                             region.ActiveViews.CollectionChanged -= ActiveViewsOnCollectionChanged;
             };
-
+            if (_config.HasRoot)
+                RegisterItem("Root", MapItemBuilder.CreateDefaultBuilder(_config.RootDisplay));
         }
 
         private void ActiveViewsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -115,11 +125,13 @@ namespace CompositeContentNavigatorServiceModule.Services
             {
                 if (!_itemsTagDictionary.TryGetValue(parentName, out _selectedItem))
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentException("ParentNotFound",nameof(parentName));
                 }
                 if (!(_selectedItem is CompositeMapItem item))
                 {
+                    // decorate MapItem with CompositeMapItem 
                     var compositeMapItem = new CompositeMapItem(_itemsTagDictionary[parentName]);
+                    // change old MapItem with new CompositeMapItem in TreeList
                     _itemsTagDictionary[parentName] = compositeMapItem;
                     if (_rootItemList.Contains(_selectedItem))
                     {
@@ -153,22 +165,14 @@ namespace CompositeContentNavigatorServiceModule.Services
 
         public void RequestNavigate(MapItem item)
         {
-
-            switch (item)
-            {
-                case HasViewMapItem viewItem:
-                    var viewItemMapItem = viewItem.MapItem;
-
-                    var viewType = viewItem.ViewType;
-                    if (_regionManager.Regions[ContentRegionName].ActiveViews.FirstOrDefault()?.GetType() == viewType)
-                        return;
-                    Debug.Assert(viewType.FullName != null, "viewType.FullName != null");
-                    if (!_containerRegistery.IsRegistered<object>(viewType.FullName))
-                        _containerRegistery.RegisterSingleton(typeof(object), viewType, viewType.FullName);
-                    _regionManager.Regions[ContentRegionName].RequestNavigate(viewType.FullName);
-
-                    break;
-            }
+            var viewType = item.GetViewType();
+            if (viewType == null)
+                return;
+            if (_regionManager.Regions[ContentRegionName].ActiveViews.FirstOrDefault()?.GetType() == viewType)
+                return;
+            if (!_containerRegistery.IsRegistered<object>(viewType.FullName))
+                _containerRegistery.RegisterSingleton(typeof(object), viewType, viewType.FullName);
+            _regionManager.Regions[ContentRegionName].RequestNavigate(viewType.FullName, item.GetNavigationParameters());
         }
     }
 

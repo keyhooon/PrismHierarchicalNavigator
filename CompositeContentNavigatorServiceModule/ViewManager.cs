@@ -1,35 +1,47 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
 using System.Windows;
-using System.Windows.Shapes;
 
 namespace CompositeContentNavigatorServiceModule
 {
     public class ViewManager : DependencyObject
     {
-        public static readonly DependencyProperty ViewNameProperty = DependencyProperty.RegisterAttached(
-            "ViewName", typeof(string), typeof(ViewManager), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty HeaderDisplayProperty = DependencyProperty.RegisterAttached(
+            "HeaderDisplay", typeof(string), typeof(ViewManager), new PropertyMetadata(default(string)));
 
-        public static void SetViewName(DependencyObject element, string value)
+        public static void SetHeaderDisplay(DependencyObject element, string value)
         {
-            element.SetValue(ViewNameProperty, value);
+            element.SetValue(HeaderDisplayProperty, value);
         }
 
-        public static string GetViewName(DependencyObject element)
+        public static string GetHeaderDisplay(DependencyObject element)
         {
-            return (string)element.GetValue(ViewNameProperty);
+            return (string)element.GetValue(HeaderDisplayProperty);
         }
 
-        public static readonly DependencyProperty ViewImageProperty = DependencyProperty.RegisterAttached(
-            "ViewImage", typeof(Path), typeof(ViewManager), new PropertyMetadata(default(Path)));
+        public static readonly DependencyProperty HeaderChipIconProperty = DependencyProperty.RegisterAttached(
+            "HeaderChipIcon", typeof(ContentElement), typeof(ViewManager), new PropertyMetadata(new ContentElement()));
 
-        public static void SetViewImage(DependencyObject element, Path value)
+        public static void SetHeaderChipIcon(DependencyObject element, ContentElement value)
         {
-            element.SetValue(ViewImageProperty, value);
+            element.SetValue(HeaderChipIconProperty, value);
         }
 
-        public static Path GetViewImage(DependencyObject element)
+        public static ContentElement GetHeaderChipIcon(DependencyObject element)
         {
-            return (Path)element.GetValue(ViewImageProperty);
+            return (ContentElement)element.GetValue(HeaderChipIconProperty);
+        }
+
+        public static readonly DependencyProperty HeaderPackIconProperty = DependencyProperty.RegisterAttached(
+            "HeaderPackIcon", typeof(PackIconKind), typeof(ViewManager), new PropertyMetadata(PackIconKind.About));
+
+        public static void SetHeaderPackIcon(DependencyObject element, PackIconKind value)
+        {
+            element.SetValue(HeaderPackIconProperty, value);
+        }
+
+        public static PackIconKind GetHeaderPackIcon(DependencyObject element)
+        {
+            return (PackIconKind)element.GetValue(HeaderPackIconProperty);
         }
     }
 }

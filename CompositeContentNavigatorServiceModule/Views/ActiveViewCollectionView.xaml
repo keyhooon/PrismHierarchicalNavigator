@@ -37,21 +37,12 @@
                         Background="{DynamicResource PrimaryHueDarkBrush}"
                         Command="{Binding DataContext.NavigateCommand, ElementName=ListView}"
                         CommandParameter="{Binding}"
-                        Content="{Binding Path=(compositecontentnavigatorservicemodule:ViewManager.ViewName)}"
+                        Content="{Binding Path=(compositecontentnavigatorservicemodule:ViewManager.HeaderDisplay)}"
                         DeleteCommand="{Binding DataContext.DeleteCommand, ElementName=ListView}"
                         DeleteCommandParameter="{Binding}"
                         Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                        IsDeletable="True">
-                        <wpf:Chip.Icon>
-                            <Path
-                                Width="24"
-                                Height="24"
-                                Data="{Binding Path=(compositecontentnavigatorservicemodule:ViewManager.ViewImage).Data}"
-                                Fill="{Binding IconForeground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type wpf:Chip}}}"
-                                Stretch="Uniform" />
-                        </wpf:Chip.Icon>
-
-                    </wpf:Chip>
+                        IsDeletable="True"
+                        Icon="{Binding Path=(compositecontentnavigatorservicemodule:ViewManager.HeaderChipIcon)}"/>
                 </StackPanel>
             </DataTemplate>
         </ListView.ItemTemplate>

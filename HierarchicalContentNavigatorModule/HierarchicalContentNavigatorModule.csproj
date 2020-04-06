@@ -7,10 +7,15 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CompositeContentNavigatorServiceModule" Version="1.0.1" />
+    <Compile Remove="Config\**" />
+    <EmbeddedResource Remove="Config\**" />
+    <None Remove="Config\**" />
+    <Page Remove="Config\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Config\" />
+    <ProjectReference Include="..\CompositeContentNavigatorServiceModule\CompositeContentNavigatorServiceModule.csproj" />
   </ItemGroup>
 </Project>
