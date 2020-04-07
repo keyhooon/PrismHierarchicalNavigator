@@ -11,6 +11,9 @@ using CompositeContentNavigator.Services.MapItems.Data;
 using System.Collections.ObjectModel;
 using System.IO;
 using MaterialDesignThemes.Wpf;
+using Prism.Regions;
+using WpfInfrastructure.RegionAdapter;
+using System.Windows.Controls;
 
 namespace Demo
 {
@@ -29,8 +32,12 @@ namespace Demo
             ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
             configurationBuilder.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("AppConfig.json", false, true);
             containerRegistry.RegisterInstance(configurationBuilder.Build());
+        }
 
-
+        protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)
+        {
+            base.ConfigureRegionAdapterMappings(regionAdapterMappings);
+            regionAdapterMappings?.RegisterMapping(typeof(ToolBarTray), Container.Resolve<ToolbarRegionAdapter>());
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
@@ -44,7 +51,7 @@ namespace Demo
             var compositeMapNavigatorService = Container.Resolve<CompositeMapNavigatorService>();
 
             compositeMapNavigatorService.RegisterItem("Cardio", MapItemBuilder.CreateDefaultBuilder("Cardio").WithImagePackIcon(PackIconKind.Heart).WithChild(new Collection<MapItem> {
-                    compositeMapNavigatorService.RegisterItem("CardioSignal",MapItemBuilder.CreateDefaultBuilder("Signal").WithView(typeof(View1)).WithImagePackIcon(PackIconKind.Signal)),
+                    compositeMapNavigatorService.RegisterItem("CardioSignal",MapItemBuilder.CreateDefaultBuilder("Signal").WithToolbars(new[]{typeof(Toolbar1) }).WithView(typeof(View1)).WithImagePackIcon(PackIconKind.Signal)),
                     compositeMapNavigatorService.RegisterItem("CardioAnalysis",MapItemBuilder.CreateDefaultBuilder("Analysis").WithView(typeof(View2)).WithImagePackIcon(PackIconKind.Analog))
                 }));
         }

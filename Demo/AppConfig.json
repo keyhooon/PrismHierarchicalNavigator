@@ -4,6 +4,7 @@
     "RootDisplay": "Main Root",
     "ContentRegionName": "ContentRegion",
     "ContentMapRegionName": "ContentMapRegion",
+    "ToolbarRegionName": "ToolbarRegion",
     "HeaderRegionName": "HeaderRegion"
   }
 }

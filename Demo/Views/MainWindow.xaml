@@ -21,10 +21,15 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="5*" />
         </Grid.RowDefinitions>
-        <ContentControl
+        <ToolBarTray
             Grid.Row="1"
+            Grid.ColumnSpan="2"
+            prism:RegionManager.RegionName="ToolbarRegion" />
+        <ContentControl
+            Grid.Row="2"
             Grid.Column="1"
             prism:RegionManager.RegionName="ContentRegion" />
         <ContentControl
@@ -33,7 +38,7 @@
             Grid.ColumnSpan="2"
             prism:RegionManager.RegionName="HeaderRegion" />
         <ContentControl
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="0"
             prism:RegionManager.RegionName="ContentMapRegion" />
 

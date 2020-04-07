@@ -1,0 +1,13 @@
+﻿<ToolBar
+    x:Class="Demo.Views.Toolbar1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:prism="http://prismlibrary.com/"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    Style="{StaticResource MaterialDesignToolBar}">
+    <Button Content="button1" />
+    <Separator />
+    <TextBlock VerticalAlignment="Center" Text="Textblock1" />
+    <Separator />
+    <TextBox Width="70" />
+</ToolBar>

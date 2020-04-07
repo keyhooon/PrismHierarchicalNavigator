@@ -112,7 +112,7 @@ namespace CompositeContentNavigator.Services
             if (toolbars != null && toolbars.Any())
                 foreach (var toolbar in toolbars)
                 {
-                    if (_container.IsRegistered<object>(toolbar.FullName))
+                    if (!_container.IsRegistered<object>(toolbar.FullName))
                         _container.RegisterSingleton(typeof(object), toolbar, toolbar.FullName);
                     _regionManager.Regions[ToolbarRegionName].RequestNavigate(toolbar.FullName);
                 }
