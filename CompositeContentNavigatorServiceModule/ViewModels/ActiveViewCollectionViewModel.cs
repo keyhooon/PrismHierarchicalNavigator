@@ -19,78 +19,51 @@ namespace CompositeContentNavigator.ViewModels
                 _config = new ModuleConfig();
 
             ContentRegion = regionManager.Regions.FirstOrDefault(region => region.Name == _config.ContentRegionName);
-            if (ContentRegion != null)
-                ContentRegion.ActiveViews.CollectionChanged += ActiveViews_CollectionChanged;
-            regionManager.Regions.CollectionChanged += (sender, args) =>
-            {
-                switch (args.Action)
-                {
-                    case NotifyCollectionChangedAction.Add:
-                        foreach (IRegion argsNewItem in args.NewItems)
-                            if (argsNewItem.Name == _config.ContentRegionName)
-                            {
-                                ContentRegion = argsNewItem;
-                                ContentRegion.ActiveViews.CollectionChanged += ActiveViews_CollectionChanged;
-                            }
-                        break;
-                    case NotifyCollectionChangedAction.Remove:
-                        foreach (IRegion argsNewItem in args.OldItems)
-                            if (argsNewItem.Name == _config.ContentRegionName)
-                            {
-                                ContentRegion.ActiveViews.CollectionChanged -= ActiveViews_CollectionChanged;
-                                ContentRegion = null;
-                            }
-                        break;
-                }
-            };
+            regionManager.Regions.CollectionChanged += (sender, args) =>ContentRegion = regionManager.Regions.FirstOrDefault(region => region.Name == _config.ContentRegionName);
         }
 
         private void ActiveViews_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
- //           ActiveView = ContentRegion.ActiveViews.FirstOrDefault();
+            _activeView = ContentRegion.ActiveViews.FirstOrDefault();
+            RaisePropertyChanged(nameof(ActiveView));
         }
 
         private object _activeView;
         public object ActiveView
         {
             get { return _activeView; }
-            set { SetProperty(ref _activeView, value); }
+            set { SetProperty(ref _activeView, value, ()=>ContentRegion.Activate(value)); }
         }
 
-
-
-        /// <summary>
-        /// The <see cref="ContentRegion" /> property's name.
-        /// </summary>
+        private IViewsCollection _views;
+        public IViewsCollection Views
+        {
+            get { return _views; }
+            set { SetProperty(ref _views, value); }
+        }
+                     
         private IRegion _contentRegion = null;
-
-        /// <summary>
-        /// Sets and gets the ContentRegion property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
         public IRegion ContentRegion
         {
             get => _contentRegion;
-            private set => SetProperty(ref _contentRegion, value);
+            private set
+            {
+                if (_contentRegion == value)
+                    return;
+                if (_contentRegion != null)
+                    _contentRegion.ActiveViews.CollectionChanged -= ActiveViews_CollectionChanged;
+                _contentRegion = value;
+                if (ContentRegion != null)
+                    ContentRegion.ActiveViews.CollectionChanged += ActiveViews_CollectionChanged;
+                Views = ContentRegion?.Views;
+            }
         }
 
-        private DelegateCommand<object> _navigateCommand;
-        /// <summary>
-        /// Gets the MyCommand.
-        /// </summary>
-        public DelegateCommand<object> NavigateCommand =>
-                    _navigateCommand ??= new DelegateCommand<object>(o => { if (o != null) ContentRegion.Activate(o); }, o => ContentRegion != null).ObservesProperty(() => ContentRegion);
-
-
-
         private DelegateCommand<object> _deleteCommand;
-        /// <summary>
-        /// Gets the MyCommand.
-        /// </summary>
         public DelegateCommand<object> DeleteCommand =>
                     _deleteCommand ??= new DelegateCommand<object>(o =>
                     {
-//                        ContentRegion.NavigationService.Journal.
+ //                       ContentRegion.NavigationService.Journal.GoBack();
                         ContentRegion.Remove(o);
 
                     }, o => ContentRegion != null).ObservesProperty(() => ContentRegion);

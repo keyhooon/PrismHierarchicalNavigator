@@ -4,7 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:data="clr-namespace:CompositeContentNavigator.Services.MapItems.Data"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:prism="http://prismlibrary.com/" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:prism="http://prismlibrary.com/"
     prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type data:MapItem}">
@@ -19,7 +20,7 @@
                     <Path
                         Width="32"
                         Height="32"
-                        Data="{Binding Image.ImageSvgPath}"
+                        Data="{Binding ImageSvgPath}"
                         Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}}"
                         Stretch="Uniform" />
                 </Viewbox>
@@ -28,8 +29,10 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type data:HasImagePackIconMapItem}">
             <StackPanel Orientation="Horizontal">
-                <materialDesign:PackIcon Width="32"
-                        Height="32" Kind="{Binding Image.Kind}" />
+                <materialDesign:PackIcon
+                    Width="32"
+                    Height="32"
+                    Kind="{Binding Kind}" />
                 <ContentControl VerticalAlignment="Center" Content="{Binding MapItem}" />
             </StackPanel>
         </DataTemplate>
@@ -44,7 +47,7 @@
             </StackPanel>
         </DataTemplate>
         <DataTemplate DataType="{x:Type data:HasToolbarMapItem}">
-                <ContentControl Content="{Binding MapItem}" />
+            <ContentControl Content="{Binding MapItem}" />
         </DataTemplate>
         <HierarchicalDataTemplate DataType="{x:Type data:CompositeMapItem}" ItemsSource="{Binding ChildList}">
             <ContentControl Content="{Binding MapItem}" />

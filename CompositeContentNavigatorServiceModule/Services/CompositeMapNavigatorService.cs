@@ -7,15 +7,16 @@ using CompositeContentNavigator.Services.MapItems;
 using CompositeContentNavigator.Services.MapItems.Data;
 using Microsoft.Extensions.Configuration;
 using Prism.Ioc;
+using Prism.Mvvm;
 using Prism.Regions;
 
 
 namespace CompositeContentNavigator.Services
 {
-    public class CompositeMapNavigatorService
+    public class CompositeMapNavigatorService : BindableBase
     {
         public string ContentRegionName => _config.ContentRegionName;
-        public string ToolbarRegionName => _config.ContentMapRegionName;
+        public string ToolbarRegionName => _config.ToolbarRegionName;
 
         private readonly IRegionManager _regionManager;
         private readonly IContainerRegistry _container;
@@ -27,6 +28,27 @@ namespace CompositeContentNavigator.Services
         private readonly Dictionary<string, MapItem> _itemsViewDictionary;
         private readonly ObservableCollection<MapItem> _rootItemList;
 
+        public event EventHandler ActiveViewOnContentRegionChanged;
+        public event EventHandler ContentRegionChanged;
+
+
+        private IRegion _contentRegion;
+        public IRegion ContentRegion
+        {
+            get { return _contentRegion; }
+            set 
+            {
+                if (value == _contentRegion)
+                    return;
+                if (_contentRegion != null)
+                    _contentRegion.ActiveViews.CollectionChanged -= ActiveViewsOnCollectionChanged;
+                _contentRegion = value;
+                if (_contentRegion != null)
+                    _contentRegion.ActiveViews.CollectionChanged += ActiveViewsOnCollectionChanged;
+                RaisePropertyChanged();
+                ContentRegionChanged?.Invoke(this, null);
+            }
+        }
         public CompositeMapNavigatorService(IRegionManager regionManager, IContainerExtension container, IConfigurationRoot configurationRoot)
         {
 
@@ -43,19 +65,9 @@ namespace CompositeContentNavigator.Services
             RootItemList = new ReadOnlyObservableCollection<MapItem>(_rootItemList);
             _itemsViewDictionary = new Dictionary<string, MapItem>();
             _itemsTagDictionary = new Dictionary<string, MapItem>();
-            var contentRegion = _regionManager.Regions.Where((region, i) => region.Name == ContentRegionName).FirstOrDefault();
-            if (contentRegion != null) contentRegion.ActiveViews.CollectionChanged += ActiveViewsOnCollectionChanged;
-            _regionManager.Regions.CollectionChanged += (sender, args) =>
-            {
-                if (args.NewItems != null)
-                    foreach (Region region in args.NewItems)
-                        if (region.Name == ContentRegionName)
-                            region.ActiveViews.CollectionChanged += ActiveViewsOnCollectionChanged;
-                if (args.OldItems != null)
-                    foreach (Region region in args.OldItems)
-                        if (region.Name == ContentRegionName)
-                            region.ActiveViews.CollectionChanged -= ActiveViewsOnCollectionChanged;
-            };
+            ContentRegion = _regionManager.Regions.Where((region, i) => region.Name == ContentRegionName).FirstOrDefault();
+            _regionManager.Regions.CollectionChanged += (sender, args) =>ContentRegion = _regionManager.Regions.Where((region, i) => region.Name == ContentRegionName).FirstOrDefault();
+
             if (_config.HasRoot)
                 RegisterItem("Root", MapItemBuilder.CreateDefaultBuilder(_config.RootDisplay));
         }
@@ -73,6 +85,7 @@ namespace CompositeContentNavigator.Services
                 var oldActiveView = e.OldItems[0];
                 OnDeactiveView(oldActiveView);
             }
+            ActiveViewOnContentRegionChanged?.Invoke(this, null);
         }
 
         private void OnDeactiveView(object newDeactiveView)

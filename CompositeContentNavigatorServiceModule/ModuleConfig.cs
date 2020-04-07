@@ -13,8 +13,9 @@
             ContentRegionName  = "ContentRegion";
             ContentMapRegionName  = "ContentMapRegion";
             HeaderRegionName = "HeaderRegion";
+            ToolbarRegionName = "ToolbarRegion";
 
-        }
+    }
 
         public bool HasRoot { get; set; } 
 
@@ -24,7 +25,9 @@
 
         public string ContentMapRegionName { get; set; } 
 
-        public string HeaderRegionName { get; set; } 
+        public string HeaderRegionName { get; set; }
+
+        public string ToolbarRegionName { get; set; }
 
     }
 }

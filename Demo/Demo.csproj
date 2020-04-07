@@ -12,4 +12,9 @@
   <ItemGroup>
     <ProjectReference Include="..\CompositeContentNavigatorServiceModule\CompositeContentNavigator.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="AppConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

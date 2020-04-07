@@ -1,4 +1,7 @@
-﻿using System.Windows.Controls;
+﻿using CompositeContentNavigator.Infrastructure;
+using MaterialDesignThemes.Wpf;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace CompositeContentNavigator.Views
 {
@@ -10,6 +13,25 @@ namespace CompositeContentNavigator.Views
         public ActiveViewCollectionView()
         {
             InitializeComponent();
+        }
+
+        private void Chip_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+            var dependencyObject = (DependencyObject)e.OriginalSource;
+            var listViewItem = dependencyObject.FindAncestor<ListViewItem>();
+            var listView = dependencyObject.FindAncestor<ListView>();
+            var chip = dependencyObject.FindAncestor<Chip>();
+
+            if (listViewItem != null)
+            {
+                if (chip != null)
+                {
+                    ListView.SelectedItem = listViewItem.DataContext;
+                    //listViewItem.SetValue(ListBoxItem.IsSelectedProperty, true);
+                }
+                else e.Handled = true; //Handled means will not pass to ListView for selection.
+            }
         }
     }
 }

@@ -1,9 +1,19 @@
-﻿<UserControl x:Class="Demo.Views.View2"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"             
-             prism:ViewModelLocator.AutoWireViewModel="True">
+﻿<UserControl
+    x:Class="Demo.Views.View2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:contentNavigator="clr-namespace:CompositeContentNavigator;assembly=CompositeContentNavigator"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:prism="http://prismlibrary.com/"
+    contentNavigator:ViewManager.HeaderDisplay="Monitor"
+    prism:ViewModelLocator.AutoWireViewModel="True">
+    <contentNavigator:ViewManager.HeaderChipIcon>
+        <materialDesign:PackIcon Kind="Monitor" />
+    </contentNavigator:ViewManager.HeaderChipIcon>
     <Grid>
-        <TextBlock Text="View B"/>
+        <TextBlock
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Text="View B" />
     </Grid>
 </UserControl>

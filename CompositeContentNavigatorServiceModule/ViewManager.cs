@@ -19,16 +19,16 @@ namespace CompositeContentNavigator
         }
 
         public static readonly DependencyProperty HeaderChipIconProperty = DependencyProperty.RegisterAttached(
-            "HeaderChipIcon", typeof(ContentElement), typeof(ViewManager), new PropertyMetadata());
+            "HeaderChipIcon", typeof(DependencyObject), typeof(ViewManager), new PropertyMetadata());
 
-        public static void SetHeaderChipIcon(DependencyObject element, ContentElement value)
+        public static void SetHeaderChipIcon(DependencyObject element, DependencyObject value)
         {
             element.SetValue(HeaderChipIconProperty, value);
         }
 
-        public static ContentElement GetHeaderChipIcon(DependencyObject element)
+        public static DependencyObject GetHeaderChipIcon(DependencyObject element)
         {
-            return (ContentElement)element.GetValue(HeaderChipIconProperty);
+            return (DependencyObject)element.GetValue(HeaderChipIconProperty);
         }
 
         public static readonly DependencyProperty HeaderPackIconProperty = DependencyProperty.RegisterAttached(

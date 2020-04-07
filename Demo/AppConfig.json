@@ -1,9 +1,10 @@
 ﻿{
   "ContentNavigator": {
-    "HasRoot": false,
-    "RootDisplay": "",
+    "HasRoot": true,
+    "RootDisplay": "Main Root",
     "ContentRegionName": "ContentRegion",
-    "ToolbarRegionName": "ToolBarRegion",
+    "ContentMapRegionName": "ContentMapRegion",
     "HeaderRegionName": "HeaderRegion"
   }
 }
+
