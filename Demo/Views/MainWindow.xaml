@@ -25,8 +25,8 @@
             <RowDefinition Height="5*" />
         </Grid.RowDefinitions>
         <ToolBarTray
-            Grid.Row="1"
-            Grid.ColumnSpan="2"
+            Grid.Row="1" 
+            Grid.Column="1"
             prism:RegionManager.RegionName="ToolbarRegion" />
         <ContentControl
             Grid.Row="2"
@@ -38,8 +38,8 @@
             Grid.ColumnSpan="2"
             prism:RegionManager.RegionName="HeaderRegion" />
         <ContentControl
-            Grid.Row="2"
-            Grid.Column="0"
+            Grid.Row="1"
+            Grid.Column="0" Grid.RowSpan="2"
             prism:RegionManager.RegionName="ContentMapRegion" />
 
     </Grid>
