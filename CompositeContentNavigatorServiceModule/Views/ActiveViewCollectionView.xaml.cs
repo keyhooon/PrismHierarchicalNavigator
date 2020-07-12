@@ -8,7 +8,7 @@ namespace CompositeContentNavigator.Views
     /// <summary>
     /// Interaction logic for ActiveViewCollectionView
     /// </summary>
-    public partial class ActiveViewCollectionView : ListView
+    public partial class ActiveViewCollectionView 
     {
         public ActiveViewCollectionView()
         {
@@ -17,10 +17,8 @@ namespace CompositeContentNavigator.Views
 
         private void Chip_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
             var dependencyObject = (DependencyObject)e.OriginalSource;
             var listViewItem = dependencyObject.FindAncestor<ListViewItem>();
-            var listView = dependencyObject.FindAncestor<ListView>();
             var chip = dependencyObject.FindAncestor<Chip>();
 
             if (listViewItem != null)
@@ -28,10 +26,11 @@ namespace CompositeContentNavigator.Views
                 if (chip != null)
                 {
                     ListView.SelectedItem = listViewItem.DataContext;
-                    //listViewItem.SetValue(ListBoxItem.IsSelectedProperty, true);
+                    listViewItem.SetValue(ListBoxItem.IsSelectedProperty, true);
                 }
                 else e.Handled = true; //Handled means will not pass to ListView for selection.
             }
+
         }
     }
 }

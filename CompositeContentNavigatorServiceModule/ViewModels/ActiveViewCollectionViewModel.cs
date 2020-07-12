@@ -32,7 +32,7 @@ namespace CompositeContentNavigator.ViewModels
         public object ActiveView
         {
             get { return _activeView; }
-            set { SetProperty(ref _activeView, value, ()=>ContentRegion.Activate(value)); }
+            set { SetProperty(ref _activeView, value, ()=> { if (value != null) ContentRegion.Activate(value); }); }
         }
 
         private IViewsCollection _views;
@@ -63,9 +63,9 @@ namespace CompositeContentNavigator.ViewModels
         public DelegateCommand<object> DeleteCommand =>
                     _deleteCommand ??= new DelegateCommand<object>(o =>
                     {
- //                       ContentRegion.NavigationService.Journal.GoBack();
                         ContentRegion.Remove(o);
-
+                        if (ContentRegion.Views.Any())
+                            ContentRegion.Activate(ContentRegion.Views.FirstOrDefault());
                     }, o => ContentRegion != null).ObservesProperty(() => ContentRegion);
     }
 }

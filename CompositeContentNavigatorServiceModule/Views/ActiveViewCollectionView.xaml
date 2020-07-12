@@ -10,23 +10,24 @@
     HorizontalAlignment="Center"
     VerticalAlignment="Stretch"
     prism:ViewModelLocator.AutoWireViewModel="True"
-    Background="Transparent"
+    Background="{DynamicResource MaterialDesignPaper}"
+    BorderThickness="0"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    ItemContainerStyle="{StaticResource MaterialDesignToolToggleListBoxItem}"
     ItemsSource="{Binding ContentRegion.Views}"
-    SelectedItem="{Binding ActiveView}">
+    PreviewKeyDown="ListView_PreviewKeyDown"
+    SelectedItem="{Binding ActiveView}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto">
     <ListView.Resources>
         <Path
             x:Key="NoIcon"
             Data="M38.5,112.4 C32.099998,112.4 26.900002,117.6 26.900002,124 L26.900002,449.60001 C26.900002,456 32.099998,461.20001 38.5,461.20001 L265.49999,461.20001 C271.89999,461.20001 277.1,456 277.1,449.60001 L277.1,124 C277.1,117.6 271.89999,112.4 265.49999,112.4 z M38.599998,85.400002 L265.6,85.400002 C286.80001,85.400002 304.1,102.7 304.2,124 L304.2,449.70001 C304.2,471 286.89999,488.29999 265.6,488.29999 L38.599998,488.29999 C17.299995,488.29999 0,471 0,449.70001 L0,124 C0,102.7 17.299995,85.400002 38.599998,85.400002 z M125.4,0 L352.39999,0 C373.7,0 390.99999,17.299999 390.99999,38.599998 L390.99999,364.29999 C390.99999,385.60001 373.7,402.89999 352.39999,402.89999 344.89999,402.89999 338.89999,396.89999 338.89999,389.39999 338.89999,381.89999 344.89999,375.89999 352.39999,375.89999 358.80001,375.89999 363.99999,370.70001 363.99999,364.29999 L363.99999,38.599998 C363.99999,32.200001 358.80001,27 352.39999,26.999998 L125.4,26.999998 C118.99999,27 113.8,32.200001 113.8,38.599998 113.8,46.099998 107.8,52.099998 100.3,52.099995 92.799995,52.099998 86.799995,46.099998 86.799995,38.599998 86.799995,17.299999 104.1,0 125.4,0 z"
             Fill="#FF000000" />
     </ListView.Resources>
-    <!--<i:Interaction.Triggers>
-        <i:EventTrigger EventName="ItemClick">
-            <i:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="{Binding SelectedItem, ElementName=ListView}" />
-        </i:EventTrigger>
-    </i:Interaction.Triggers>-->
-    <ListView.ItemContainerStyle>
-        <Style BasedOn="{StaticResource MaterialDesignToolToggleListBoxItem}" TargetType="ListBoxItem" />
-    </ListView.ItemContainerStyle>
     <ListView.ItemTemplate>
         <DataTemplate DataType="DependencyObject">
             <StackPanel>
@@ -36,10 +37,11 @@
                     CommandParameter="{Binding}"
                     Content="{Binding Path=(CompositeContentNavigator:ViewManager.HeaderDisplay)}"
                     DeleteCommand="{Binding DataContext.DeleteCommand, ElementName=ListView}"
-                    DeleteCommandParameter="{Binding}" PreviewMouseDown="Chip_PreviewMouseDown"
+                    DeleteCommandParameter="{Binding}"
                     Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                     Icon="{Binding Path=(CompositeContentNavigator:ViewManager.HeaderChipIcon)}"
-                    IsDeletable="True" />
+                    IsDeletable="True"
+                    PreviewMouseDown="Chip_PreviewMouseDown" />
             </StackPanel>
         </DataTemplate>
     </ListView.ItemTemplate>
