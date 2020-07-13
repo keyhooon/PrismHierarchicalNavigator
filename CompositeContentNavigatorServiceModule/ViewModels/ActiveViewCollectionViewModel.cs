@@ -59,13 +59,30 @@ namespace CompositeContentNavigator.ViewModels
             }
         }
 
-        private DelegateCommand<object> _deleteCommand;
-        public DelegateCommand<object> DeleteCommand =>
-                    _deleteCommand ??= new DelegateCommand<object>(o =>
+        private DelegateCommand<object> _closeCommand;
+        public DelegateCommand<object> CloseCommand =>
+                    _closeCommand ??= new DelegateCommand<object>(o =>
                     {
                         ContentRegion.Remove(o);
                         if (ContentRegion.Views.Any())
                             ContentRegion.Activate(ContentRegion.Views.FirstOrDefault());
+                    }, o => ContentRegion != null).ObservesProperty(() => ContentRegion);
+        private DelegateCommand _closeAllCommand;
+        public DelegateCommand CloseAllCommand =>
+                    _closeAllCommand ??= new DelegateCommand(() =>
+                    {
+                        ContentRegion.RemoveAll();
+                    }, () => ContentRegion != null).ObservesProperty(() => ContentRegion);
+        private DelegateCommand<object> _closeAllButThisCommand;
+        public DelegateCommand<object> CloseAllButThisCommand =>
+                    _closeAllButThisCommand ??= new DelegateCommand<object>(o =>
+                    {
+                        foreach (var view in ContentRegion.Views)
+                        {
+                            if (o == view)
+                                continue;
+                            ContentRegion.Remove(view);
+                        }
                     }, o => ContentRegion != null).ObservesProperty(() => ContentRegion);
     }
 }

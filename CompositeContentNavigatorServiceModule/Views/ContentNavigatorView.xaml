@@ -18,8 +18,8 @@
             <StackPanel Orientation="Horizontal">
                 <Viewbox>
                     <Path
-                        Width="32"
-                        Height="32"
+                        Width="24"
+                        Height="24"
                         Data="{Binding ImageSvgPath}"
                         Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}}"
                         Stretch="Uniform" />
@@ -30,8 +30,9 @@
         <DataTemplate DataType="{x:Type data:HasImagePackIconMapItem}">
             <StackPanel Orientation="Horizontal">
                 <materialDesign:PackIcon
-                    Width="32"
-                    Height="32"
+                    Width="24"
+                    Height="24"
+                    VerticalAlignment="Center"
                     Kind="{Binding Kind}" />
                 <ContentControl VerticalAlignment="Center" Content="{Binding MapItem}" />
             </StackPanel>
