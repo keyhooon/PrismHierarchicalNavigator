@@ -38,13 +38,16 @@
             </StackPanel>
         </DataTemplate>
         <DataTemplate DataType="{x:Type data:HasViewMapItem}">
-            <StackPanel Background="Transparent" Orientation="Vertical">
+            <StackPanel
+                Margin="-10"
+                Background="Transparent"
+                Orientation="Vertical">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseDown">
                         <i:InvokeCommandAction Command="{Binding ElementName=CompositeNavigatorUserControl, Path=DataContext.NavigateCommand}" CommandParameter="{Binding}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                <ContentControl Content="{Binding MapItem}" />
+                <ContentControl Margin="10" Content="{Binding MapItem}" />
             </StackPanel>
         </DataTemplate>
         <DataTemplate DataType="{x:Type data:HasToolbarMapItem}">

@@ -30,7 +30,21 @@
             Fill="#FF000000" />
     </ListBox.Resources>
     <ListBox.ItemContainerStyle>
-        <Style BasedOn="{StaticResource {x:Type ListBoxItem}}" TargetType="ListBoxItem" />
+        <Style BasedOn="{StaticResource {x:Type ListBoxItem}}" TargetType="ListBoxItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </ListBox.ItemContainerStyle>
     <ListBox.ItemTemplate>
         <DataTemplate DataType="DependencyObject">
@@ -66,7 +80,7 @@
                                             <Storyboard>
                                                 <DoubleAnimation
                                                     Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
-                                                    To="1.1"
+                                                    To="1.2"
                                                     Duration="0:0:.2">
                                                     <DoubleAnimation.EasingFunction>
                                                         <SineEase EasingMode="EaseOut" />
@@ -74,7 +88,7 @@
                                                 </DoubleAnimation>
                                                 <DoubleAnimation
                                                     Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
-                                                    To="1.1"
+                                                    To="1.2"
                                                     Duration="0:0:.2">
                                                     <DoubleAnimation.EasingFunction>
                                                         <SineEase EasingMode="EaseOut" />
