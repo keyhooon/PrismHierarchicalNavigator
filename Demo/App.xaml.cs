@@ -12,8 +12,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using MaterialDesignThemes.Wpf;
 using Prism.Regions;
-using WpfInfrastructure.RegionAdapter;
 using System.Windows.Controls;
+using CompositeContentNavigator.Infrastructure;
 
 namespace Demo
 {
@@ -37,7 +37,7 @@ namespace Demo
         protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)
         {
             base.ConfigureRegionAdapterMappings(regionAdapterMappings);
-            regionAdapterMappings?.RegisterMapping(typeof(ToolBarTray), Container.Resolve<ToolbarRegionAdapter>());
+            regionAdapterMappings?.RegisterMapping(typeof(ToolBarTray), Container.Resolve<ToolBarTrayRegionAdapter>());
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

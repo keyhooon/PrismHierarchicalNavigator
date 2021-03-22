@@ -57,7 +57,7 @@
                     DeleteCommandParameter="{Binding}"
                     Focusable="False"
                     Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                    Icon="{Binding Path=(CompositeContentNavigator:ViewManager.HeaderChipIcon), TargetNullValue={wpf:PackIcon Kind=LaptopWindows}}"
+                    Icon="{Binding Path=(CompositeContentNavigator:ViewManager.HeaderChipIcon), TargetNullValue={wpf:PackIcon Kind=Laptop}}"
                     IconBackground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                     IconForeground="{DynamicResource PrimaryHueDarkBrush}"
                     IsDeletable="True"

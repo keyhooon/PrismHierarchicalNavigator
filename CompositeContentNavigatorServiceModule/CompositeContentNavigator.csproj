@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -9,10 +9,11 @@
     <PackageProjectUrl>https://github.com/keyhooon/PrismHierarchicalNavigator</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MaterialDesignColors" Version="1.2.6" />
-    <PackageReference Include="MaterialDesignThemes" Version="3.1.3" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.5" />
-    <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
+    <PackageReference Include="MaterialDesignColors" Version="2.0.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
+    <PackageReference Include="Prism.Wpf" Version="8.0.0.1909" />
+    <PackageReference Include="WpfInfrastructure" Version="1.0.2" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\Controls\" />
