@@ -3,8 +3,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:data="clr-namespace:CompositeContentNavigator.Services.MapItems.Data"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:prism="http://prismlibrary.com/" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:prism="http://prismlibrary.com/"
     prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type data:MapItem}">
@@ -50,6 +51,9 @@
             </StackPanel>
         </DataTemplate>
         <DataTemplate DataType="{x:Type data:HasToolbarMapItem}">
+            <ContentControl Content="{Binding MapItem}" />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type data:HasExtraViewMapItem}">
             <ContentControl Content="{Binding MapItem}" />
         </DataTemplate>
         <HierarchicalDataTemplate DataType="{x:Type data:CompositeMapItem}" ItemsSource="{Binding ChildList}">

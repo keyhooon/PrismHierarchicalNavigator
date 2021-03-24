@@ -1,4 +1,6 @@
-﻿using Prism.Ioc;
+﻿using System;
+using System.Collections.Generic;
+using Prism.Ioc;
 using Demo.Views;
 using System.Windows;
 using Microsoft.Extensions.Configuration;
@@ -59,7 +61,7 @@ namespace Demo
 
             compositeMapNavigatorService.RegisterItem("Cardio", MapItemBuilder.CreateDefaultBuilder("Cardio").WithImagePackIcon(PackIconKind.Heart).WithChild(new Collection<MapItem> {
                 compositeMapNavigatorService.RegisterItem("CardioSignal", MapItemBuilder.CreateDefaultBuilder("Signal").WithToolBars(new[]{typeof(Toolbar1) }).WithView(typeof(View1)).WithImagePackIcon(PackIconKind.Signal)),
-                compositeMapNavigatorService.RegisterItem("CardioAnalysis", MapItemBuilder.CreateDefaultBuilder("Analysis").WithView(typeof(View2)).WithImagePackIcon(PackIconKind.Analog))
+                compositeMapNavigatorService.RegisterItem("CardioAnalysis", MapItemBuilder.CreateDefaultBuilder("Analysis").WithView(typeof(View2)).WithExtraView(new Dictionary<string, IEnumerable<Type>> {{"PopupToolBarRegion", new[] {typeof(View1)}}}).WithImagePackIcon(PackIconKind.Analog))
             }));
         }
     }
