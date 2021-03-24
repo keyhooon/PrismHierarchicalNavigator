@@ -7,7 +7,7 @@ namespace CompositeContentNavigator.Services.MapItems.Data
     public class CompositeMapItem : MapItemDecorator
     {
 
-        public ObservableCollection<MapItem> ChildList { get; private set; }
+        public ObservableCollection<MapItem> ChildList { get; }
 
         /// <inheritdoc />
         internal CompositeMapItem(MapItem mapItem) : this(mapItem, new ObservableCollection<MapItem>())

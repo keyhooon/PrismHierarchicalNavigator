@@ -11,7 +11,7 @@
 
         public MapItemDecorator(MapItem mapItem) : base(mapItem)
         {
-            this.MapItem = mapItem;
+            MapItem = mapItem;
         }
     }
 }

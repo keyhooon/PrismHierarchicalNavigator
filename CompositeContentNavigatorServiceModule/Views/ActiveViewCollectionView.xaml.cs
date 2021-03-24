@@ -21,15 +21,13 @@ namespace CompositeContentNavigator.Views
             var listViewItem = dependencyObject.FindAncestor<ListBoxItem>();
             var chip = dependencyObject.FindAncestor<Chip>();
 
-            if (listViewItem != null)
+            if (listViewItem == null) return;
+            if (chip != null)
             {
-                if (chip != null)
-                {
-                    ListView.SelectedItem = listViewItem.DataContext;
-                    listViewItem.SetValue(ListBoxItem.IsSelectedProperty, true);
-                }
-                else e.Handled = true; //Handled means will not pass to ListView for selection.
+                ListView.SelectedItem = listViewItem.DataContext;
+                listViewItem.SetValue(ListBoxItem.IsSelectedProperty, true);
             }
+            else e.Handled = true; //Handled means will not pass to ListView for selection.
 
         }
     }
