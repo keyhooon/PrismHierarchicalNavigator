@@ -32,15 +32,6 @@ namespace Demo
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            var configurationRoot = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("AppConfig.json", false, true)
-                .Build();
-            containerRegistry.RegisterInstance(configurationRoot);
-            containerRegistry.RegisterServices(s =>
-            {
-                s.Configure<ContentNavigatorOption>(configurationRoot.GetSection(nameof(ContentNavigatorOption)));
-            });
         }
 
         protected override void ConfigureRegionAdapterMappings(RegionAdapterMappings regionAdapterMappings)

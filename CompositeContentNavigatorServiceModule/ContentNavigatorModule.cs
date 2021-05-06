@@ -45,7 +45,7 @@ namespace CompositeContentNavigator
                 .RegisterSingleton<CompositeMapNavigatorService>()
                 .RegisterServices(s =>
                 {
-                    s.Configure<ContentNavigatorOption>(configurationRoot.GetSection(nameof(ContentNavigatorOption)));
+                    s.Configure<ContentNavigatorOption>(configurationRoot.GetSection(ContentNavigatorOption.SectionName));
                 });
 
             containerRegistry.RegisterForNavigation<ActiveViewCollectionView>(typeof(ActiveViewCollectionView).FullName);
