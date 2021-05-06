@@ -6,7 +6,7 @@ namespace CompositeContentNavigator
     public class ViewManager : DependencyObject
     {
         public static readonly DependencyProperty HeaderDisplayProperty = DependencyProperty.RegisterAttached(
-            "HeaderDisplay", typeof(string), typeof(ViewManager), new PropertyMetadata(default(string)));
+            "HeaderDisplay", typeof(string), typeof(ViewManager), new PropertyMetadata(null));
 
         public static void SetHeaderDisplay(DependencyObject element, string value)
         {
@@ -32,7 +32,7 @@ namespace CompositeContentNavigator
         }
 
         public static readonly DependencyProperty HeaderPackIconProperty = DependencyProperty.RegisterAttached(
-            "HeaderPackIcon", typeof(PackIconKind), typeof(ViewManager), new PropertyMetadata(PackIconKind.About));
+            "HeaderPackIcon", typeof(PackIconKind), typeof(ViewManager), new PropertyMetadata(PackIconKind.Monitor));
 
         public static void SetHeaderPackIcon(DependencyObject element, PackIconKind value)
         {

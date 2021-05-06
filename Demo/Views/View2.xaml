@@ -7,9 +7,6 @@
     xmlns:prism="http://prismlibrary.com/"
     contentNavigator:ViewManager.HeaderDisplay="Monitor"
     prism:ViewModelLocator.AutoWireViewModel="True">
-    <contentNavigator:ViewManager.HeaderChipIcon>
-        <materialDesign:PackIcon Kind="Monitor" />
-    </contentNavigator:ViewManager.HeaderChipIcon>
     <Grid>
         <TextBlock
             HorizontalAlignment="Center"

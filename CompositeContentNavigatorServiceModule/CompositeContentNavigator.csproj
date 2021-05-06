@@ -4,7 +4,7 @@
     <UseWPF>true</UseWPF>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <RepositoryUrl>https://github.com/keyhooon/PrismHierarchicalNavigator</RepositoryUrl>
     <PackageProjectUrl>https://github.com/keyhooon/PrismHierarchicalNavigator</PackageProjectUrl>
   </PropertyGroup>
