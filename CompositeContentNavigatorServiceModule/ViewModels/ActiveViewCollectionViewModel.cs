@@ -1,6 +1,7 @@
 ﻿using System.Collections.Specialized;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -9,17 +10,12 @@ namespace CompositeContentNavigator.ViewModels
 {
     public class ActiveViewCollectionViewModel : BindableBase
     {
-        private readonly ModuleConfig _config;
-        public ActiveViewCollectionViewModel(IRegionManager regionManager, IConfigurationRoot configurationRoot)
-        {
-            var section = configurationRoot.GetSection(ModuleConfig.SectionName);
-            if (section.Exists())
-                _config = ConfigurationBinder.Get<ModuleConfig>(section);
-            else
-                _config = new ModuleConfig();
 
-            ContentRegion = regionManager.Regions.FirstOrDefault(region => region.Name == _config.ContentRegionName);
-            regionManager.Regions.CollectionChanged += (sender, args) =>ContentRegion = regionManager.Regions.FirstOrDefault(region => region.Name == _config.ContentRegionName);
+        public ActiveViewCollectionViewModel(IRegionManager regionManager, IOptions<ContentNavigatorOption> options)
+        {
+
+            ContentRegion = regionManager.Regions.FirstOrDefault(region => region.Name == options.Value.ContentRegionName);
+            regionManager.Regions.CollectionChanged += (sender, args) =>ContentRegion = regionManager.Regions.FirstOrDefault(region => region.Name == options.Value.ContentRegionName);
         }
 
         private void ActiveViews_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -31,15 +27,15 @@ namespace CompositeContentNavigator.ViewModels
         private object _activeView;
         public object ActiveView
         {
-            get { return _activeView; }
+            get => _activeView;
             set { SetProperty(ref _activeView, value, ()=> { if (value != null) ContentRegion.Activate(value); }); }
         }
 
         private IViewsCollection _views;
         public IViewsCollection Views
         {
-            get { return _views; }
-            set { SetProperty(ref _views, value); }
+            get => _views;
+            set => SetProperty(ref _views, value);
         }
                      
         private IRegion _contentRegion = null;

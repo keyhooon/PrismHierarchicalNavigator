@@ -23,6 +23,7 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="5*" />
+            <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <ToolBarTray
             Grid.Row="1"
@@ -43,5 +44,10 @@
             Grid.RowSpan="2"
             Margin="5"
             prism:RegionManager.RegionName="ContentMapRegion" />
+        <ContentControl
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            Margin="5"
+            prism:RegionManager.RegionName="PopupToolBarRegion" />
     </Grid>
 </Window>

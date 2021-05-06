@@ -27,17 +27,6 @@ namespace CompositeContentNavigator.ViewModels
         /// <summary>
         /// Gets the MyCommand.
         /// </summary>
-        public DelegateCommand<MapItem> NavigateCommand
-        {
-            get
-            {
-                return _navigateCommand
-                       ?? (_navigateCommand = new DelegateCommand<MapItem>(
-                           (o) =>
-                           {
-                               _compositeMapService.RequestNavigate(o);
-                           }));
-            }
-        }
+        public DelegateCommand<MapItem> NavigateCommand => _navigateCommand ??= new DelegateCommand<MapItem>(_compositeMapService.RequestNavigate);
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using CompositeContentNavigator.Services.MapItems;
 using CompositeContentNavigator.Services.MapItems.Data;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -15,12 +16,12 @@ namespace CompositeContentNavigator.Services
 {
     public class CompositeMapNavigatorService : BindableBase
     {
-        public string ContentRegionName => _config.ContentRegionName;
-        public string ToolbarRegionName => _config.ToolbarRegionName;
+        public string ContentRegionName => _options.Value.ContentRegionName;
+        public string ToolbarRegionName => _options.Value.ToolbarRegionName;
 
         private readonly IRegionManager _regionManager;
         private readonly IContainerRegistry _container;
-        private readonly ModuleConfig _config;
+        private readonly IOptions<ContentNavigatorOption> _options;
         private MapItem _selectedItem;
 
         private readonly Dictionary<string, MapItem> _itemsTagDictionary;
@@ -29,47 +30,29 @@ namespace CompositeContentNavigator.Services
         private readonly ObservableCollection<MapItem> _rootItemList;
 
         public event EventHandler ActiveViewOnContentRegionChanged;
-        public event EventHandler ContentRegionChanged;
 
 
-        private IRegion _contentRegion;
-        public IRegion ContentRegion
-        {
-            get { return _contentRegion; }
-            set 
-            {
-                if (value == _contentRegion)
-                    return;
-                if (_contentRegion != null)
-                    _contentRegion.ActiveViews.CollectionChanged -= ActiveViewsOnCollectionChanged;
-                _contentRegion = value;
-                if (_contentRegion != null)
-                    _contentRegion.ActiveViews.CollectionChanged += ActiveViewsOnCollectionChanged;
-                RaisePropertyChanged();
-                ContentRegionChanged?.Invoke(this, null);
-            }
-        }
-        public CompositeMapNavigatorService(IRegionManager regionManager, IContainerExtension container, IConfigurationRoot configurationRoot)
+        public object CurrentView { get; set; }
+        public IRegion ContentRegion { get; }
+        public IRegion ToolBarRegion { get; }
+
+        public CompositeMapNavigatorService(IRegionManager regionManager, IContainerExtension container, IOptions<ContentNavigatorOption> options)
         {
 
             _regionManager = regionManager;
             _container = container;
-            var section = configurationRoot.GetSection(ModuleConfig.SectionName);
-            if (section.Exists())
-                _config = ConfigurationBinder.Get<ModuleConfig>(section);
-            else
-                _config = new ModuleConfig();
-
+            _options = options;
+       
  
             _rootItemList = new ObservableCollection<MapItem>();
             RootItemList = new ReadOnlyObservableCollection<MapItem>(_rootItemList);
             _itemsViewDictionary = new Dictionary<string, MapItem>();
             _itemsTagDictionary = new Dictionary<string, MapItem>();
             ContentRegion = _regionManager.Regions.Where((region, i) => region.Name == ContentRegionName).FirstOrDefault();
-            _regionManager.Regions.CollectionChanged += (sender, args) =>ContentRegion = _regionManager.Regions.Where((region, i) => region.Name == ContentRegionName).FirstOrDefault();
-
-            if (_config.HasRoot)
-                RegisterItem("Root", MapItemBuilder.CreateDefaultBuilder(_config.RootDisplay));
+            ToolBarRegion = _regionManager.Regions.Where((region, i) => region.Name == ToolbarRegionName).FirstOrDefault();
+            if (ContentRegion != null) ContentRegion.ActiveViews.CollectionChanged += ActiveViewsOnCollectionChanged;
+            if (options.Value.HasRoot)
+                RegisterItem("Root",MapItemBuilder.CreateDefaultBuilder(options.Value.RootDisplay) );
         }
 
         private void ActiveViewsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -90,41 +73,46 @@ namespace CompositeContentNavigator.Services
 
         private void OnDeactiveView(object newDeactiveView)
         {
-            if (!_itemsViewDictionary.TryGetValue(newDeactiveView.GetType().FullName, out var mapItem)) return;
-            var toolbars = mapItem.GetToolbars();
-            if (toolbars != null && toolbars.Any())
-                foreach (var toolbarView in toolbars.Join(_regionManager.Regions[ToolbarRegionName].Views, type => type.FullName, o => o.GetType().FullName, (type, o) => o))
+            if (!_itemsViewDictionary.TryGetValue(newDeactiveView.GetType().FullName, out var mapItem)) 
+                throw new KeyNotFoundException();
+
+            var toolBars = mapItem.GetToolBars();
+            if (toolBars != null)
+                foreach (var toolbarView in toolBars.Join(_regionManager.Regions[ToolbarRegionName].Views, type => type.FullName, o => o.GetType().FullName, (type, o) => o))
                     _regionManager.Regions[ToolbarRegionName].Remove(toolbarView);
+            
 
 
-            var extraViews = mapItem.GetExtraViews();
-            if (extraViews != null && extraViews.Any())
-                foreach (var extraView in extraViews)
-                {
-                    _regionManager.Regions[extraView.Key].Remove(extraView.Value.Join(_regionManager.Regions[extraView.Key].Views, type => type.FullName, o => o.GetType().FullName, (type, o) => o));
+            var allExtraViews = mapItem.GetExtraViews();
+            if (allExtraViews != null)
+                foreach (var (regionName, extraViews) in allExtraViews)
+                    foreach (var extraView in extraViews.Join(_regionManager.Regions[regionName].Views, type => type.FullName, o => o.GetType().FullName, (type, o) => o))
+                        _regionManager.Regions[regionName].Remove(extraView);
 
-                }
         }
         private void OnActiveView(object newActiveView)
         {
-            if (!_itemsViewDictionary.TryGetValue(newActiveView.GetType().FullName, out var mapItem)) return;
-            var toolbars = mapItem.GetToolbars();
-            if (toolbars != null && toolbars.Any())
-                foreach (var toolbar in toolbars)
+            if (!_itemsViewDictionary.TryGetValue(newActiveView.GetType().FullName!, out var mapItem)) return;
+
+
+
+            var toolBars = mapItem.GetToolBars();
+            if (toolBars != null)
+                foreach (var toolbar in toolBars)
                 {
                     if (!_container.IsRegistered<object>(toolbar.FullName))
                         _container.RegisterSingleton(typeof(object), toolbar, toolbar.FullName);
-                    _regionManager.Regions[ToolbarRegionName].RequestNavigate(toolbar.FullName);
+                    ToolBarRegion.RequestNavigate(toolbar.FullName);
                 }
 
             var allExtraViews = mapItem.GetExtraViews();
-            if (allExtraViews != null && allExtraViews.Any())
-                foreach (var extraViews in allExtraViews)
-                    foreach (var extraView in extraViews.Value)
+            if (allExtraViews != null)
+                foreach (var (regionName, extraViews) in allExtraViews)
+                    foreach (var extraView in extraViews)
                     {
                         if (!_container.IsRegistered<object>(extraView.FullName))
                             _container.RegisterSingleton(typeof(object), extraView, extraView.FullName);
-                        _regionManager.Regions[extraViews.Key].RequestNavigate(extraView.FullName);
+                        _regionManager.Regions[regionName].RequestNavigate(extraView.FullName);
                     }
 
         }
@@ -136,22 +124,20 @@ namespace CompositeContentNavigator.Services
             if (parentName != string.Empty)
             {
                 if (!_itemsTagDictionary.TryGetValue(parentName, out _selectedItem))
-                {
                     throw new ArgumentException("ParentNotFound",nameof(parentName));
-                }
                 if (!(_selectedItem is CompositeMapItem item))
                 {
                     // decorate MapItem with CompositeMapItem 
-                    var compositeMapItem = new CompositeMapItem(_itemsTagDictionary[parentName]);
+                    var parentItem = new CompositeMapItem(_itemsTagDictionary[parentName]);
                     // change old MapItem with new CompositeMapItem in TreeList
-                    _itemsTagDictionary[parentName] = compositeMapItem;
+                    _itemsTagDictionary[parentName] = parentItem;
                     if (_rootItemList.Contains(_selectedItem))
                     {
                         _rootItemList.Remove(_selectedItem);
-                        _rootItemList.Add(compositeMapItem);
+                        _rootItemList.Add(parentItem);
                     }
 
-                    item = compositeMapItem;
+                    item = parentItem;
                 }
 
                 observableCollection = item.ChildList;

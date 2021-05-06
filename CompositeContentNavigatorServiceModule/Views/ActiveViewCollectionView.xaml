@@ -24,10 +24,11 @@
     <ListBox.ItemContainerStyle>
         <Style BasedOn="{StaticResource {x:Type ListBoxItem}}" TargetType="ListBoxItem">
             <Setter Property="Margin" Value="5" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Grid Background="{TemplateBinding Background}">
+                        <Grid Background="Transparent">
                             <ContentPresenter
                                 Margin="{TemplateBinding Padding}"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -41,162 +42,152 @@
     </ListBox.ItemContainerStyle>
     <ListBox.ItemTemplate>
         <DataTemplate DataType="DependencyObject">
+            <StackPanel>
+                <wpf:Chip
+                    Background="Transparent"
+                    Command="{Binding DataContext.NavigateCommand, ElementName=ListView}"
+                    CommandParameter="{Binding}"
+                    DeleteCommand="{Binding DataContext.CloseCommand, ElementName=ListView}"
+                    DeleteCommandParameter="{Binding}"
+                    Focusable="False"
+                    Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                    Icon="{Binding Path=(CompositeContentNavigator:ViewManager.HeaderChipIcon), TargetNullValue={wpf:PackIcon Kind=LaptopWindows}}"
+                    IconBackground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                    IconForeground="{DynamicResource PrimaryHueDarkBrush}"
+                    IsDeletable="True"
+                    Opacity=".5"
+                    PreviewMouseDown="Chip_PreviewMouseDown">
+                    <!--  IsDeletable="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}"  -->
+                    <wpf:Chip.Content>
+                        <TextBlock Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="{Binding Path=(CompositeContentNavigator:ViewManager.HeaderDisplay)}" />
+                    </wpf:Chip.Content>
+                    <wpf:Chip.RenderTransform>
+                        <ScaleTransform CenterX="50" CenterY="10" ScaleX="1" ScaleY="1" />
+                    </wpf:Chip.RenderTransform>
+                    <wpf:Chip.Resources />
+                    <wpf:Chip.Style>
+                        <Style BasedOn="{StaticResource {x:Type wpf:Chip}}" TargetType="wpf:Chip">
+                            <Style.Triggers>
+                                <EventTrigger RoutedEvent="UIElement.MouseEnter">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                                    To="1.2"
+                                                    Duration="0:0:.2">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <SineEase EasingMode="EaseOut" />
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                                <DoubleAnimation
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                                    To="1.2"
+                                                    Duration="0:0:.2">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <SineEase EasingMode="EaseOut" />
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="UIElement.MouseLeave">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                                    To="1"
+                                                    Duration="0:0:.2">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <SineEase EasingMode="EaseOut" />
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                                <DoubleAnimation
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                                    To="1"
+                                                    Duration="0:0:.2">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <SineEase EasingMode="EaseOut" />
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="wpf:Chip.Click">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                                    To="1"
+                                                    Duration="0:0:1">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <ElasticEase EasingMode="EaseOut" />
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                                <DoubleAnimation
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                                    To="1"
+                                                    Duration="0:0:1">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <ElasticEase EasingMode="EaseOut" />
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Value="True">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                                    To="1"
+                                                    Duration="0:0:1">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <ElasticEase EasingMode="EaseOut" />
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                                <DoubleAnimation
+                                                    Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                                    To="1"
+                                                    Duration="0:0:1">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <ElasticEase EasingMode="EaseOut" />
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                                <DoubleAnimation
+                                                    Storyboard.TargetProperty="Opacity"
+                                                    To="1"
+                                                    Duration="0:0:.5">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <SineEase EasingMode="EaseInOut" />
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                    Storyboard.TargetProperty="Opacity"
+                                                    To=".5"
+                                                    Duration="0:0:.5">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <SineEase EasingMode="EaseInOut" />
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.ExitActions>
 
-            <wpf:Chip
-                Padding="5"
-                Command="{Binding DataContext.NavigateCommand, ElementName=ListView}"
-                CommandParameter="{Binding}"
-                DeleteCommand="{Binding DataContext.CloseCommand, ElementName=ListView}"
-                DeleteCommandParameter="{Binding}"
-                Focusable="False"
-                IsDeletable="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}"
-                Opacity=".5"
-                PreviewMouseDown="Chip_PreviewMouseDown">
-                <wpf:Chip.Icon>
-                    <wpf:PackIcon Kind="{Binding Path=(CompositeContentNavigator:ViewManager.HeaderPackIcon)}" />
-                </wpf:Chip.Icon>
-
-                <wpf:Chip.RenderTransform>
-                    <ScaleTransform CenterX="50" CenterY="10" ScaleX="1" ScaleY="1" />
-                </wpf:Chip.RenderTransform>
-                <wpf:Chip.Resources />
-                <wpf:Chip.Style>
-                    <Style BasedOn="{StaticResource {x:Type wpf:Chip}}" TargetType="wpf:Chip">
-                        <Setter Property="Content">
-                            <Setter.Value>
-                                <TextBlock
-                                    Foreground="{DynamicResource MaterialDesignBody}"
-                                    Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                    Text="{Binding Path=(CompositeContentNavigator:ViewManager.HeaderDisplay)}" />
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <EventTrigger RoutedEvent="UIElement.MouseEnter">
-                                <EventTrigger.Actions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation
-                                                Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
-                                                To="1.2"
-                                                Duration="0:0:.2">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <SineEase EasingMode="EaseOut" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                            <DoubleAnimation
-                                                Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
-                                                To="1.2"
-                                                Duration="0:0:.2">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <SineEase EasingMode="EaseOut" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger.Actions>
-                            </EventTrigger>
-                            <EventTrigger RoutedEvent="UIElement.MouseLeave">
-                                <EventTrigger.Actions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation
-                                                Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
-                                                To="1"
-                                                Duration="0:0:.2">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <SineEase EasingMode="EaseOut" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                            <DoubleAnimation
-                                                Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
-                                                To="1"
-                                                Duration="0:0:.2">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <SineEase EasingMode="EaseOut" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger.Actions>
-                            </EventTrigger>
-                            <EventTrigger RoutedEvent="wpf:Chip.Click">
-                                <EventTrigger.Actions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation
-                                                Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
-                                                To="1"
-                                                Duration="0:0:1">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <ElasticEase EasingMode="EaseOut" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                            <DoubleAnimation
-                                                Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
-                                                To="1"
-                                                Duration="0:0:1">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <ElasticEase EasingMode="EaseOut" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger.Actions>
-                            </EventTrigger>
-                            <DataTrigger Binding="{Binding Path=(CompositeContentNavigator:ViewManager.HeaderDisplay)}" Value="{x:Null}">
-                                <Setter Property="Content">
-                                    <Setter.Value>
-                                        <TextBlock Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="Window" />
-                                    </Setter.Value>
-                                </Setter>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Value="True">
-                                <DataTrigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation
-                                                Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
-                                                To="1"
-                                                Duration="0:0:1">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <ElasticEase EasingMode="EaseOut" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                            <DoubleAnimation
-                                                Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
-                                                To="1"
-                                                Duration="0:0:1">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <ElasticEase EasingMode="EaseOut" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                            <DoubleAnimation
-                                                Storyboard.TargetProperty="Opacity"
-                                                To="1"
-                                                Duration="0:0:.5">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <SineEase EasingMode="EaseInOut" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </DataTrigger.EnterActions>
-                                <DataTrigger.ExitActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation
-                                                Storyboard.TargetProperty="Opacity"
-                                                To=".5"
-                                                Duration="0:0:.5">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <SineEase EasingMode="EaseInOut" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </DataTrigger.ExitActions>
-                            </DataTrigger>
-                        </Style.Triggers>
+                                </DataTrigger>
+                            </Style.Triggers>
 
                     </Style>
                 </wpf:Chip.Style>

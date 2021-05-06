@@ -26,7 +26,7 @@ namespace CompositeContentNavigator.Services.MapItems.Data
         public static MapItemBuilder WithImageSvgPath(this MapItemBuilder mapItemBuilder, Path imageSvgPath)
         {
             if (mapItemBuilder.SetupActions.Keys.Contains(1))
-                throw new NotSupportedException("Multi Image for Map Item not Support");
+                throw new NotSupportedException("Multiple Image for Map Item not Support");
             mapItemBuilder.SetupActions.Add(1, item => new HasImageSvgPathMapItem(item, imageSvgPath));
             return mapItemBuilder;
         }

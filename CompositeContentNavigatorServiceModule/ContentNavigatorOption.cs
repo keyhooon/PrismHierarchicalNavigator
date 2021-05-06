@@ -1,11 +1,11 @@
 ﻿namespace CompositeContentNavigator
 {
-    public class ModuleConfig
+    public class ContentNavigatorOption
     {
 
         public static string SectionName = "ContentNavigator";
 
-        public ModuleConfig()
+        public ContentNavigatorOption()
         {
 
             HasRoot = false;

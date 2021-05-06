@@ -24,7 +24,7 @@ namespace CompositeContentNavigator.Services.MapItems.Data
         public static MapItemBuilder WithImagePackIcon(this MapItemBuilder mapItemBuilder, PackIconKind kind)
         {
             if (mapItemBuilder.SetupActions.Keys.Contains(1))
-                throw new NotSupportedException("Multi Image for Map Item not Support");
+                throw new NotSupportedException("Multiple Image for Map Item not Support");
             mapItemBuilder.SetupActions.Add(1, item => new HasImagePackIconMapItem(item, kind));
             return mapItemBuilder;
         }

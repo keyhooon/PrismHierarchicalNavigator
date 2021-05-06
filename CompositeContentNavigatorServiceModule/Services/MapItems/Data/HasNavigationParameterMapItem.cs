@@ -23,7 +23,7 @@ namespace CompositeContentNavigator.Services.MapItems.Data
     {
         public static MapItemBuilder WithNavigationParameters(this MapItemBuilder mapItemBuilder, NavigationParameters navigationParameters)
         {
-            if (mapItemBuilder.SetupActions.Keys.Contains(15))
+            if (mapItemBuilder.SetupActions.Keys.Contains(400))
                 throw new Exception("This Set more than One time");
             mapItemBuilder.SetupActions.Add(400, item => new HasNavigationParameterMapItem(item, navigationParameters));
             return mapItemBuilder;
