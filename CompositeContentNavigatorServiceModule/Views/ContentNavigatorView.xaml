@@ -21,7 +21,7 @@
                         Width="24"
                         Height="24"
                         Data="{Binding ImageSvgPath}"
-                        Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}}"
+                        Fill="{DynamicResource PrimaryHueMidBrush}"
                         Stretch="Uniform" />
                 </Viewbox>
                 <ContentControl VerticalAlignment="Center" Content="{Binding MapItem}" />
@@ -33,6 +33,7 @@
                     Width="24"
                     Height="24"
                     VerticalAlignment="Center"
+                    Foreground="{DynamicResource PrimaryHueMidBrush}"
                     Kind="{Binding Kind}" />
                 <ContentControl VerticalAlignment="Center" Content="{Binding MapItem}" />
             </StackPanel>
@@ -66,6 +67,7 @@
             MinWidth="150"
             HorizontalAlignment="Stretch"
             HorizontalContentAlignment="Stretch"
+            Foreground="{DynamicResource MaterialDesignBody}"
             ItemsSource="{Binding RootItems}" />
     </Grid>
 </UserControl>

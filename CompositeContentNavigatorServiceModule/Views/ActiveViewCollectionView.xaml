@@ -15,6 +15,7 @@
     BorderThickness="0"
     Focusable="False"
     FontFamily="{DynamicResource MaterialDesignFont}"
+    Foreground="{DynamicResource MaterialDesignBody}"
     ItemsSource="{Binding Views}"
     SelectedItem="{Binding ActiveView}"
     SelectionMode="Extended"
@@ -43,15 +44,15 @@
     <ListBox.ItemTemplate>
         <DataTemplate DataType="DependencyObject">
             <wpf:Chip
-                Background="Transparent"
+                Background="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=Background}"
                 Command="{Binding DataContext.NavigateCommand, ElementName=ListView}"
                 CommandParameter="{Binding}"
                 DeleteCommand="{Binding DataContext.CloseCommand, ElementName=ListView}"
                 DeleteCommandParameter="{Binding}"
                 Focusable="False"
-                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                IconBackground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                IconForeground="{DynamicResource PrimaryHueDarkBrush}"
+                Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=Foreground}"
+                IconBackground="{DynamicResource PrimaryHueDarkBrush}"
+                IconForeground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                 IsDeletable="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}"
                 Opacity=".5"
                 PreviewMouseDown="Chip_PreviewMouseDown">
