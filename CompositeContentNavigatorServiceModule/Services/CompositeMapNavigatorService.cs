@@ -21,7 +21,7 @@ namespace CompositeContentNavigator.Services
 
         private readonly IRegionManager _regionManager;
         private readonly IContainerRegistry _container;
-        private readonly IOptions<ContentNavigatorOption> _options;
+        private readonly IOptions<ContentNavigatorOptions> _options;
         private MapItem _selectedItem;
 
         private readonly Dictionary<string, MapItem> _itemsTagDictionary;
@@ -36,7 +36,7 @@ namespace CompositeContentNavigator.Services
         public IRegion ContentRegion { get; }
         public IRegion ToolBarRegion { get; }
 
-        public CompositeMapNavigatorService(IRegionManager regionManager, IContainerExtension container, IOptions<ContentNavigatorOption> options)
+        public CompositeMapNavigatorService(IRegionManager regionManager, IContainerExtension container, IOptions<ContentNavigatorOptions> options)
         {
 
             _regionManager = regionManager;
@@ -52,7 +52,7 @@ namespace CompositeContentNavigator.Services
             ToolBarRegion = _regionManager.Regions.Where((region, i) => region.Name == ToolbarRegionName).FirstOrDefault();
             if (ContentRegion != null) ContentRegion.ActiveViews.CollectionChanged += ActiveViewsOnCollectionChanged;
             if (options.Value.HasRoot)
-                RegisterItem("Root",MapItemBuilder.CreateDefaultBuilder(options.Value.RootDisplay) );
+                RegisterItem("Root",MapItemBuilder.CreateDefaultBuilder(options.Value.RootDisplay).WithImagePackIcon(options.Value.RootPackIcon) );
         }
 
         private void ActiveViewsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

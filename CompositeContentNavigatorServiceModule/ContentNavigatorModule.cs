@@ -22,12 +22,12 @@ namespace CompositeContentNavigator
 {
     public class ContentNavigatorModule : IModule
     {
-        private ContentNavigatorOption _config;
+        private ContentNavigatorOptions _config;
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
             var regionManager = containerProvider.Resolve<IRegionManager>();
-            var option = containerProvider.Resolve<IOptions<ContentNavigatorOption>>();
+            var option = containerProvider.Resolve<IOptions<ContentNavigatorOptions>>();
 
             regionManager.RegisterViewWithRegion(option.Value.HeaderRegionName, typeof(ActiveViewCollectionView));
             regionManager.RegisterViewWithRegion(option.Value.ContentMapRegionName, typeof(ContentNavigatorView));
@@ -45,7 +45,7 @@ namespace CompositeContentNavigator
                 .RegisterSingleton<CompositeMapNavigatorService>()
                 .RegisterServices(s =>
                 {
-                    s.Configure<ContentNavigatorOption>(configurationRoot.GetSection(ContentNavigatorOption.SectionName));
+                    s.Configure<ContentNavigatorOptions>(configurationRoot.GetSection(nameof(ContentNavigatorOptions)));
                 });
 
             containerRegistry.RegisterForNavigation<ActiveViewCollectionView>(typeof(ActiveViewCollectionView).FullName);

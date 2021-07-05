@@ -1,15 +1,18 @@
-﻿namespace CompositeContentNavigator
+﻿using MaterialDesignThemes.Wpf;
+
+namespace CompositeContentNavigator
 {
-    public class ContentNavigatorOption
+    public class ContentNavigatorOptions
     {
 
-        public static string SectionName = "ContentNavigator";
 
-        public ContentNavigatorOption()
+
+        public ContentNavigatorOptions()
         {
 
             HasRoot = false;
             RootDisplay = "";
+            RootPackIcon = PackIconKind.Abc;
             ContentRegionName  = "ContentRegion";
             ContentMapRegionName  = "ContentMapRegion";
             HeaderRegionName = "HeaderRegion";
@@ -17,9 +20,10 @@
 
     }
 
-        public bool HasRoot { get; set; } 
+        public bool HasRoot { get; set; }
 
-        public string RootDisplay { get; set; } 
+        public string RootDisplay { get; set; }
+        public PackIconKind RootPackIcon { get; set; }
 
         public string ContentRegionName { get; set; } 
 

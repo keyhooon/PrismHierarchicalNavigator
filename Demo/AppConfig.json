@@ -1,7 +1,8 @@
 ﻿{
-  "ContentNavigator": {
-    "HasRoot": false,
+  "ContentNavigatorOptions": {
+    "HasRoot": true,
     "RootDisplay": "AAA",
+    "RootPackIcon": "AboutOutline",
     "ContentRegionName": "ContentRegion",
     "ContentMapRegionName": "ContentMapRegion",
     "ToolbarRegionName": "ToolbarRegion",

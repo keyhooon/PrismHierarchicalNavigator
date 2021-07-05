@@ -11,7 +11,7 @@ namespace CompositeContentNavigator.ViewModels
     public class ActiveViewCollectionViewModel : BindableBase
     {
 
-        public ActiveViewCollectionViewModel(IRegionManager regionManager, IOptions<ContentNavigatorOption> options)
+        public ActiveViewCollectionViewModel(IRegionManager regionManager, IOptions<ContentNavigatorOptions> options)
         {
 
             ContentRegion = regionManager.Regions.FirstOrDefault(region => region.Name == options.Value.ContentRegionName);
