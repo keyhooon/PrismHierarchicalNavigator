@@ -22,8 +22,8 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />
-    <PackageReference Include="Prism.Microsoft.DependencyInjection.Extensions" Version="8.0.62" />
-    <PackageReference Include="Prism.Unity" Version="8.1.97" />
+    <PackageReference Include="Prism.Unity.Extensions" Version="8.0.62" />
+    <PackageReference Include="Prism.Wpf" Version="8.0.0.1909" />
     <PackageReference Include="WpfInfrastructure" Version="1.0.2" />
   </ItemGroup>
 </Project>

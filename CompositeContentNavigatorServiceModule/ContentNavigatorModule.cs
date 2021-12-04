@@ -13,10 +13,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CompositeContentNavigator.Services;
 using CompositeContentNavigator.Views;
-using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Prism.Microsoft.DependencyInjection;
+
 
 namespace CompositeContentNavigator
 {
@@ -28,9 +27,12 @@ namespace CompositeContentNavigator
         {
             var regionManager = containerProvider.Resolve<IRegionManager>();
             var option = containerProvider.Resolve<IOptions<ContentNavigatorOptions>>();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                regionManager.RegisterViewWithRegion(option.Value.HeaderRegionName, typeof(ActiveViewCollectionView));
+                regionManager.RegisterViewWithRegion(option.Value.ContentMapRegionName, typeof(ContentNavigatorView));
+            });
 
-            regionManager.RegisterViewWithRegion(option.Value.HeaderRegionName, typeof(ActiveViewCollectionView));
-            regionManager.RegisterViewWithRegion(option.Value.ContentMapRegionName, typeof(ContentNavigatorView));
             
         }
 

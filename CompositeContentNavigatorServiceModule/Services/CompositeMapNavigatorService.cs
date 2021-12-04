@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Windows;
 using CompositeContentNavigator.Services.MapItems;
 using CompositeContentNavigator.Services.MapItems.Data;
 using Microsoft.Extensions.Configuration;
@@ -73,7 +74,7 @@ namespace CompositeContentNavigator.Services
 
         private void OnDeactiveView(object newDeactiveView)
         {
-            if (!_itemsViewDictionary.TryGetValue(newDeactiveView.GetType().FullName, out var mapItem)) 
+            if (!_itemsViewDictionary.TryGetValue(newDeactiveView.GetType().FullName!, out var mapItem)) 
                 throw new KeyNotFoundException();
 
             var toolBars = mapItem.GetToolBars();
@@ -117,15 +118,23 @@ namespace CompositeContentNavigator.Services
 
         }
 
+        public bool TryGetItemByName(string name, out MapItem mapItem)
+        {
+            return _itemsTagDictionary.TryGetValue(name, out mapItem);
+        }
         public MapItem RegisterItem(string name, MapItemBuilder builder, string parentName = "")
         {
+            if (!Application.Current.Dispatcher.CheckAccess())
+            {
+                return Application.Current.Dispatcher.Invoke(()=>RegisterItem(name, builder, parentName));
+            }
             if (_itemsTagDictionary.ContainsKey(name)) throw new ArgumentException();
             ObservableCollection<MapItem> observableCollection;
             if (parentName != string.Empty)
             {
                 if (!_itemsTagDictionary.TryGetValue(parentName, out _selectedItem))
                     throw new ArgumentException("ParentNotFound",nameof(parentName));
-                if (!(_selectedItem is CompositeMapItem item))
+                if (_selectedItem is not CompositeMapItem item)
                 {
                     // decorate MapItem with CompositeMapItem 
                     var parentItem = new CompositeMapItem(_itemsTagDictionary[parentName]);
@@ -149,7 +158,7 @@ namespace CompositeContentNavigator.Services
             var mapItem = builder.Build();
             _itemsTagDictionary.Add(name, mapItem);
             var viewType = mapItem.GetViewType();
-            if (viewType != null && viewType.FullName != null)
+            if (viewType?.FullName != null)
                 _itemsViewDictionary.Add(viewType.FullName, mapItem);
             observableCollection.Add(mapItem);
             if (mapItem is CompositeMapItem compositeItem)
