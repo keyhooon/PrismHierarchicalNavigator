@@ -6,7 +6,6 @@ using System.Linq;
 using System.Windows;
 using CompositeContentNavigator.Services.MapItems;
 using CompositeContentNavigator.Services.MapItems.Data;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Prism.Ioc;
 using Prism.Mvvm;

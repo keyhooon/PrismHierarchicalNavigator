@@ -1,16 +1,10 @@
-﻿using System;
-using Prism.Ioc;
+﻿using Prism.Ioc;
 
 using System.Windows;
-using System.Windows.Controls;
-
 using Prism.Regions;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 using Prism.Modularity;
-using CompositeContentNavigator.Infrastructure;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using CompositeContentNavigator.Services;
 using CompositeContentNavigator.Views;
 using Microsoft.Extensions.DependencyInjection;

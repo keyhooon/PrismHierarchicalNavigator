@@ -1,5 +1,4 @@
-﻿using CompositeContentNavigator.Services.MapItems;
-using Prism.Regions;
+﻿using Prism.Regions;
 using System;
 
 namespace CompositeContentNavigator.Services.MapItems.Data

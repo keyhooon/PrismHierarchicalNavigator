@@ -1,5 +1,4 @@
-﻿using CompositeContentNavigator.Services.MapItems;
-using MaterialDesignThemes.Wpf;
+﻿using MaterialDesignThemes.Wpf;
 using System;
 
 namespace CompositeContentNavigator.Services.MapItems.Data

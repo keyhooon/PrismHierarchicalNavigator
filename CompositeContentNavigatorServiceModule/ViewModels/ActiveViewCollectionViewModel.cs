@@ -1,6 +1,5 @@
 ﻿using System.Collections.Specialized;
 using System.Linq;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Prism.Commands;
 using Prism.Mvvm;

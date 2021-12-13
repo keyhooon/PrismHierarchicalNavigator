@@ -1,5 +1,4 @@
-﻿using CompositeContentNavigator.Services.MapItems;
-using System;
+﻿using System;
 using System.Windows.Media;
 
 namespace CompositeContentNavigator.Services.MapItems.Data

@@ -1,7 +1,4 @@
-﻿
-
-using CompositeContentNavigator.Services.MapItems;
-using System;
+﻿using System;
 using System.Windows.Shapes;
 
 namespace CompositeContentNavigator.Services.MapItems.Data

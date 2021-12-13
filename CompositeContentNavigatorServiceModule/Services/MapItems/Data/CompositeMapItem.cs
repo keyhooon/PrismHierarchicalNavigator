@@ -1,6 +1,4 @@
-﻿
-using CompositeContentNavigator.Services.MapItems;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace CompositeContentNavigator.Services.MapItems.Data
 {

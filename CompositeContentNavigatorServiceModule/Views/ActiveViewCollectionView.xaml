@@ -61,7 +61,10 @@
                     <wpf:PackIcon Kind="{Binding Path=(CompositeContentNavigator:ViewManager.HeaderPackIcon)}" />
                 </wpf:Chip.Icon>
                 <wpf:Chip.Content>
-                    <TextBlock Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="{Binding Path=(CompositeContentNavigator:ViewManager.HeaderDisplay)}" />
+                    <TextBlock
+                        Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                        Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                        Text="{Binding Path=(CompositeContentNavigator:ViewManager.HeaderDisplay)}" />
                 </wpf:Chip.Content>
                 <wpf:Chip.RenderTransform>
                     <ScaleTransform CenterX="50" CenterY="10" ScaleX="1" ScaleY="1" />

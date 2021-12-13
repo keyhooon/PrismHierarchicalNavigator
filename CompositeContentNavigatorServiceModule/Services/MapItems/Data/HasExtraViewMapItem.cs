@@ -1,5 +1,4 @@
-﻿using CompositeContentNavigator.Services.MapItems;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace CompositeContentNavigator.Services.MapItems.Data

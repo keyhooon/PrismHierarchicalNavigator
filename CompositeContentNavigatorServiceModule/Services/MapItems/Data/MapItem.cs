@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.Design;
 
 namespace CompositeContentNavigator.Services.MapItems.Data
 {
